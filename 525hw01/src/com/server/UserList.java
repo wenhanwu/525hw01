@@ -12,12 +12,12 @@ import java.util.ArrayList;
  */
 public class UserList {
 
-    private static ArrayList<User> Ulist = new ArrayList();
+    private static ArrayList<User> uList = new ArrayList();
 
     public static User fetchByUserID(int ID) {
-        for (int i = 0; i < Ulist.size(); i++) {
-            if ((Ulist.get(i)).getUserID() == ID) {
-                return Ulist.get(i);
+        for (int i = 0; i < uList.size(); i++) {
+            if ((uList.get(i)).getUserID() == ID) {
+                return uList.get(i);
             }
         }
         return null;
