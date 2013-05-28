@@ -136,7 +136,7 @@ public class Client {
         return trade_type;        
     }
 
-    public static int tradeForAdmin() {			//start
+    public static int tradeForAdmin(String userName) {			//start
 
         Scanner scan = new Scanner(System.in);
         
