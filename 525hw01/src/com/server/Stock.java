@@ -44,5 +44,9 @@ public class Stock {
         else 
             return false;
     }
+    
+    public String toString() {
+        return this.getTickerName() + " " + this.getPrice();
+    }
 }
 
