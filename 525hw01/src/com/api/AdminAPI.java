@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.api;
+import com.server.StockList;
 import java.lang.*;
 /**
  *
