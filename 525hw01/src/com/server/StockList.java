@@ -24,6 +24,7 @@ public class StockList {
      * Default constructor.
      */
     public StockList() {
+        //not used yet.
     }
 
     /**
@@ -114,5 +115,17 @@ public class StockList {
             System.out.println("Could not get the stock information from the server.");
             return null;
         }
+    }
+    
+    /**
+     * This method saves all the information in the stockPool to the disk for persistent storage.
+     * @return 
+     */
+    public static boolean saveStockPoolToDisk() {
+        return false; //to-do 
+    }
+    
+    public static boolean loadStockPoolFromDisk() {
+        return false; //to-do
     }
 }

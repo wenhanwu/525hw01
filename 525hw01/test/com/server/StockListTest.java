@@ -158,6 +158,11 @@ public class StockListTest {
     public void testUpdateWholeStockList() {
         System.out.println("updateWholeStockList");
         StockList.update("GOOG", 100);
+        StockList.update("AAPL", 100);
+        StockList.update("MSFT", 100);
+        StockList.update("BBRY", 100);
+        StockList.getStockbyName("AAPL").setShare(900);
+        
         System.out.println(StockList.getStockPool());
         StockList.updateWholeStockList();
         System.out.println(StockList.getStockPool());
