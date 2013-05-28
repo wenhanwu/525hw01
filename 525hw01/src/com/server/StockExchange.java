@@ -29,5 +29,13 @@ public class StockExchange extends Stock {
         this.share = share;
     }
     
+    public void overwriteStockPrice(Stock newStock) {
+        if (newStock == null)
+            return;
+        this.setPrice(newStock.getPrice());
+    }
     
+    public String toString() {
+        return super.toString() + " " + this.getShare();
+    }
 }
