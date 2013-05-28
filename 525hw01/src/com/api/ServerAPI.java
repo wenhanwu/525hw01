@@ -11,7 +11,8 @@ import java.lang.*;
  */
 public interface ServerAPI {
     
-		public boolean isConnect();
+	public boolean isConnect();
     	public boolean isAdmin(String user_name); // return true when the user is the admin, reture false otherwise.
+	public boolean isValidUser(String user_name); // return true when the user is the admin, reture false otherwise.
     
 }
