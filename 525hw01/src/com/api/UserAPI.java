@@ -3,17 +3,21 @@
  * and open the template in the editor.
  */
 package com.api;
+
 import com.server.Stock;
 import java.lang.*;
+
 /**
  *
  * @author jingboyu
  */
 public interface UserAPI {
-    
-    	public double getPrice(String ticker_name);
-	public boolean buy(String ticker_name, int num_stocks);
-	public boolean sell(String ticker_name, int num_stocks);
-        public Stock getStockList();
-    
+
+    public double getPrice(String ticker_name);
+
+    public boolean buy(String ticker_name, int num_stocks);
+
+    public boolean sell(String ticker_name, int num_stocks);
+
+    public Stock getStockList();
 }
