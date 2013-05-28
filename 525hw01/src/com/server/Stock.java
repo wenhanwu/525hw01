@@ -11,16 +11,17 @@ package com.server;
 public class Stock {
     private String ticker_name;
     private double price; 
-
-    public Stock(String ticker_name) {
-        this.ticker_name = ticker_name;
-    }    
     
     public Stock(String ticker_name, double price) {
         this.ticker_name = ticker_name;
         this.price = price;
     }    
 
+    public Stock(Stock newstock) {
+        this.ticker_name = newstock.ticker_name;
+        this.price = newstock.price;
+    }
+    
     public String getTickerName() {
         return ticker_name;
     }
