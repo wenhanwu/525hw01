@@ -21,14 +21,14 @@ public class Client {
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Please input your username, or input q for quit");
+        System.out.println("Please input your username (q to quit) :");
         do {
             String userInput = scan.nextLine();
             if (userInput == "q") {
                 break;
             }
 
-            // get user type
+            // get user type or add new user
             try {
                 Registry registry = LocateRegistry.getRegistry(host);
                 Client stub = (Client) registry.lookup("ServerAPI");
@@ -41,7 +41,7 @@ public class Client {
                     }
                     break;
                 } else {
-                    System.out.println("user name does not exist! Please input your username, or input q for quit");
+                    type = stub.addNewUser(userInput);
                 }
             } catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
@@ -56,11 +56,31 @@ public class Client {
         return type;
     }
 
+    static void userPrompt() {
+
+        System.out.println("----------------------------------------------------------");
+        System.out.println("|Commmands:	s - Sell stocks         b - Buy stocks       |");
+        System.out.println("|		l - Get My Stock List   q - Quit             |");
+        System.out.println("----------------------------------------------------------");
+
+    }
+
+    static void adminPrompt() {
+
+        System.out.println("----------------------------------------------------------");
+        System.out.println("|commands:	l - Get Stock List    u - Update Stock Price |");
+        System.out.println("|		q - Quit                                     |");
+        System.out.println("----------------------------------------------------------");
+
+    }
+
     public static int tradeForUser(String userName) {			//start
 
         Scanner scan = new Scanner(System.in);
-
-        System.out.println("Please input your options, s for sell, b for buy, l for list, or input q for quit");
+        
+        userPrompt();
+        System.out.println("Please input your operation:");
+        
         do {
             String userInput = scan.nextLine();
             if (userInput == "q") {
@@ -106,25 +126,70 @@ public class Client {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Please input your options, s for sell, b for buy, l for list, or input q for quit");
+                System.out.println("Please input your operation:");
             }
 
 
         } while (true);
 
 
-        return type;
+        return trade_type;        
     }
 
     public static int tradeForAdmin() {			//start
 
-        // to do
-        return 1;
+        Scanner scan = new Scanner(System.in);
+        
+        userPrompt();
+        System.out.println("Please input your operation:");
+        
+        do {
+            String userInput = scan.nextLine();
+            if (userInput == "q") {
+                break;
+            }
+
+            if (userInput == "u") // to do. equals() inconsistent type fix for later debug
+            {
+
+                try {
+                    Registry registry = LocateRegistry.getRegistry(host);
+                    Client stub = (Client) registry.lookup("AdminAPI");
+                    // to do 
+                    // query AdminAPI and sell stock
+
+
+                } catch (Exception e) {
+                    System.err.println("Client exception: " + e.toString());
+                    e.printStackTrace();
+                }
+            } else if (userInput == "l") {
+                try {
+                    Registry registry = LocateRegistry.getRegistry(host);
+                    Client stub = (Client) registry.lookup("AdminAPI");
+                    // to do 
+                    // query AdminAPI and list stock
+
+
+                } catch (Exception e) {
+                    System.err.println("Client exception: " + e.toString());
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Please input your operation:");
+            }
+
+
+        } while (true);
+
+
+        return trade_type; 
     }
 
     public static void main(String[] args) {
 
         String host = (args.length < 1) ? null : args[0];
+
         try {
             Registry registry = LocateRegistry.getRegistry(host);
             Client stub = (Client) registry.lookup("ServerAPI");
@@ -133,29 +198,16 @@ public class Client {
                 System.out.println("connected!");
                 String userName = "";
                 int type = welcome(userName); // get user name, and return user type, 0 no such user, 1 ordinary user, 2 admin
-                if (type == 0);
-                System.out.println("88!");
-             else if (type == 1) {
-                tradeForUser(userName);// something to do with user
-            } else if (type == 2) {
-                tradeForAdmin(userName); // something to do with admin
-            } else {
-                System.out.println("ERROR: should never go here!!!");
-            }
+                if (type == 1) {
+                    tradeForUser(userName);// something to do with user
+                } else if (type == 2) {
+                    tradeForAdmin(userName); // something to do with admin
+                } else {
+                    System.out.println("wrong user type!");
+                }
+            }  catch (Exception e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
         }
-    
-
-    
-        else
-					{
-						System.out.println("disconnected!");
     }
-}
-catch (Exception e) {
-					System.err.println("Client exception: " + e.toString());
-					e.printStackTrace();
-				}
-
-
-		}
 }
