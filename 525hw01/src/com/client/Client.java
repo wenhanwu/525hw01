@@ -13,18 +13,44 @@ import java.lang.*;
  */
 public class Client {
    
+		public static void welcome(){			//start
+
+		Scanner scan = new Scanner(System.in);
+		int input = -1;			//input is the index of words[];
+		String userInput = "";
+
+		initialPrompt();
+		System.out.print("- ");		//prompt user to enter lines.
+
+			do
+			{
+				String str = scan.nextLine();
+				input = parseUserInput(str);		//parse user input: search the key word and return its index in words[].
+
+			}
+			while (true);
+		}
+		
         public static void main(String[] args) {
-/*
+
         String host = (args.length < 1) ? null : args[0];
-        try {
-            Registry registry = LocateRegistry.getRegistry(host);
-            Client stub = (Client) registry.lookup("Hello");
-            String response = stub.sayHello();
-            System.out.println("response: " + response);
-        } catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
-            e.printStackTrace();
-        }
-        */
-}
+		try {
+				Registry registry = LocateRegistry.getRegistry(host);
+				Client stub = (Client) registry.lookup("ServerAPI");
+				if (stub.isConnect())
+				{
+					System.out.println("connected!");
+					welcome();
+				}
+				else
+				{
+					System.out.println("disconnected!");
+				}
+			} catch (Exception e) {
+				System.err.println("Client exception: " + e.toString());
+				e.printStackTrace();
+			}
+
+
+		}
 }
