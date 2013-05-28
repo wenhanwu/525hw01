@@ -5,13 +5,14 @@
 package com.server;
 
 import com.api.AdminAPI;
+import java.util.ArrayList;
 
 /**
  *
  * @author w
  */
-public class Admin implements AdminAPI{
-    
+public class Admin implements AdminAPI {
+
     private int adminID;
     private String adminName;
 
@@ -44,12 +45,18 @@ public class Admin implements AdminAPI{
     }
 
     @Override
-    public void update(String ticker_name, double new_price) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<StockExchange> getStockList() {
+        return StockList.getStockPool();
     }
 
     @Override
-    public StockList getStockList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(String ticker_name, double new_price) {
+        if (StockList.getStockbyName(ticker_name) != null) {
+            StockList.update(ticker_name, new_price);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
