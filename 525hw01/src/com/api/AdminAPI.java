@@ -4,6 +4,7 @@
  */
 package com.api;
 import com.server.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,5 +13,5 @@ import com.server.*;
 public interface AdminAPI {
     
     	public boolean update(String ticker_name, double new_price);
-        public StockList getStockList();
+        public ArrayList<StockExchange> getStockList();
 }
