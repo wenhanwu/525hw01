@@ -12,6 +12,8 @@
                 <ticker_name>GOOG</ticker_name>
                 <price>880.4</price>
                 <share>100</share>
+            </stockExchange>
+            <stockExchange>
                 <ticker_name>AAPL</ticker_name>
                 <price>440.85</price>
                 <share>100</share>
@@ -31,6 +33,8 @@
                 <ticker_name>MSFT</ticker_name>
                 <price>34.41</price>
                 <share>1000</share>
+            </stockExchange>
+            <stockExchange>
                 <ticker_name>AAPL</ticker_name>
                 <price>440.85</price>
                 <share>100</share>
@@ -50,6 +54,8 @@
                 <ticker_name>GOOG</ticker_name>
                 <price>880.4</price>
                 <share>100</share>
+            </stockExchange>
+            <stockExchange>
                 <ticker_name>BBRY</ticker_name>
                 <price>14.31</price>
                 <share>1000</share>

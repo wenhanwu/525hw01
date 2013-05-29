@@ -156,10 +156,10 @@ public class UserList {
                 Element userStockList = userList.createElement("stockList");
                 user.appendChild(userStockList);
 
-                Element stockExchange = userList.createElement("stockExchange");
 
 
                 for (int j = 0; j < uList.get(i).getStockListofUser().size(); j++) {
+                Element stockExchange = userList.createElement("stockExchange");
 
                     userStockList.appendChild(stockExchange);
                     Element ticker_name = userList.createElement("ticker_name");
