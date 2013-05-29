@@ -15,8 +15,6 @@ import java.util.ArrayList;
  */
 public interface UserAPI {
 
-    public double getMarketPrice(String ticker_name);
-
     public double getBoughtPrice(String ticker_name);
 
     public int buy(String ticker_name, int num_stocks);
@@ -24,4 +22,6 @@ public interface UserAPI {
     public int sell(String ticker_name, int num_stocks);
 
     public ArrayList<StockExchange> getStockListofUser();
+    
+    public int displayStocksHold();
 }
