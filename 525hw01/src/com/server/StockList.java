@@ -154,6 +154,7 @@ public class StockList {
                 Element stockExchange = savedStockList.createElement("stockExchange");
                 rootElement.appendChild(stockExchange);
                 
+                // ticker_name elements
                 Element ticker_name = savedStockList.createElement("ticker_name");
                 ticker_name.appendChild(savedStockList.createTextNode(stockPool.get(i).getTickerName()));
                 stockExchange.appendChild(ticker_name);
