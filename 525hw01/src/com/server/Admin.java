@@ -44,11 +44,23 @@ public class Admin implements AdminAPI {
         this.adminName = adminName;
     }
 
+    /**
+     * Get the Market stock List
+     *
+     * @return
+     */
     @Override
     public ArrayList<StockExchange> getStockList() {
         return StockList.getStockPool();
     }
 
+    /**
+     * Find the stock by its name and update it
+     *
+     * @param ticker_name
+     * @param new_price
+     * @return
+     */
     @Override
     public boolean update(String ticker_name, double new_price) {
         if (StockList.getStockbyName(ticker_name) != null) {
@@ -58,5 +70,21 @@ public class Admin implements AdminAPI {
             return false;
         }
 
+    }
+
+    /**
+     * Display all the Market Stocks
+     *
+     * @return
+     */
+    @Override
+    public int displayMarketStocks() {
+        System.out.println("Stock Name-----Shares Hold-----Price of Last Trade");
+        for (int i = 0; i < StockList.getStockPool().size(); i++) {
+            System.out.println((StockList.getStockPool().get(i)).getTickerName() + "  "
+                    + (StockList.getStockPool().get(i)).getShare() + "   "
+                    + (StockList.getStockPool().get(i)).getPrice());
+        }
+        return 0;
     }
 }
