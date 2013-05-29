@@ -13,25 +13,30 @@ import java.util.ArrayList;
  */
 public class User implements UserAPI {
 
-    private int userID;
+    //private int userID;
     private String userName;
-    private int balance;
+    private double balance;
     private ArrayList<StockExchange> sEList = new ArrayList();
 
-    /**
-     * @return the userID
-     */
-    public int getUserID() {
-        return userID;
-    }
-
-    /**
-     * @param userID the userID to set
-     */
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
+//    /**
+//     * @return the userID
+//     */
+//    public int getUserID() {
+//        return userID;
+//    }
+//
+//    /**
+//     * @param userID the userID to set
+//     */
+//    public void setUserID(int userID) {
+//        this.userID = userID;
+//    }
+public User(String userName, double balance, ArrayList<StockExchange> sEList){
+    this.userName=userName;
+    this.balance=balance;
+    this.sEList=sEList;
+    
+}
     /**
      * @return the userName
      */
@@ -49,14 +54,14 @@ public class User implements UserAPI {
     /**
      * @return the balance
      */
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
     /**
      * @param balance the balance to set
      */
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
