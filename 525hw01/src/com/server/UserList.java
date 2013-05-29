@@ -99,15 +99,15 @@ public class UserList {
                                                         }
                                                         if (innerChecker == 3) {
                                                             sEList.add(new StockExchange(Integer.parseInt(share), ticker_name, Double.parseDouble(price)));
-                                                            System.out.println(ticker_name + " " + price + " " + share);
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                     }
+                                    checker++;
                                 }
-                                if (checker == 2) {
+                                if (checker == 3) {
                                     uList.add(new User(userName, Double.parseDouble(balance), sEList));
                                 }
                             }
@@ -141,6 +141,7 @@ public class UserList {
             Element rootElement = userList.createElement("userList");
             userList.appendChild(rootElement);
 
+            System.out.println(uList.size());
             for (int i = 0; i < uList.size(); i++) {
                 Element user = userList.createElement("user");
                 rootElement.appendChild(user);
@@ -156,10 +157,8 @@ public class UserList {
                 Element userStockList = userList.createElement("stockList");
                 user.appendChild(userStockList);
 
-
-
                 for (int j = 0; j < uList.get(i).getStockListofUser().size(); j++) {
-                Element stockExchange = userList.createElement("stockExchange");
+                    Element stockExchange = userList.createElement("stockExchange");
 
                     userStockList.appendChild(stockExchange);
                     Element ticker_name = userList.createElement("ticker_name");
@@ -173,7 +172,7 @@ public class UserList {
                     stockExchange.appendChild(share);
 
                 }
- 
+
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
