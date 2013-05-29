@@ -176,7 +176,7 @@ public class StockList {
 
             transformer.transform(source, result);
 
-            System.out.println("File saved!");
+//            System.out.println("File saved!");
             return true;
 
         } catch (ParserConfigurationException pce) {
@@ -193,7 +193,7 @@ public class StockList {
      * @return true or false
      */
     public static boolean loadStockPoolFromDisk() {
-         DocumentBuilderFactory domfac=DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory domfac=DocumentBuilderFactory.newInstance();
         try {         
             stockPool.clear();
             DocumentBuilder dombuilder=domfac.newDocumentBuilder();
@@ -206,12 +206,12 @@ public class StockList {
                 for(int i=0;i<stockList.getLength();i++){
                     Node stockExchange=stockList.item(i);
                     if(stockExchange.getNodeType()==Node.ELEMENT_NODE){
+                        int checker = 0;
+                        String ticker_name = "";
+                        String price = "";
+                        String share = "";
                         for(Node node=stockExchange.getFirstChild();node!=null;node=node.getNextSibling()){
-                            if(node.getNodeType()==Node.ELEMENT_NODE){
-                                int checker = 0;
-                                String ticker_name = "";
-                                String price = "";
-                                String share = "";
+                            if(node.getNodeType()==Node.ELEMENT_NODE && checker < 3){
                                 if(node.getNodeName().equals("ticker_name")){
                                     ticker_name=node.getFirstChild().getNodeValue();
                                     ++ checker;
@@ -224,25 +224,31 @@ public class StockList {
                                     share=node.getFirstChild().getNodeValue();
                                     ++ checker;
                                 }
-                                if (checker == 3) {
-                                    stockPool.add(new StockExchange(Integer.parseInt(share), ticker_name, Double.parseDouble(price)));
-                                    System.out.println(price);
-                                    System.out.println(share);
-                                }
+                            }
+                            if (checker == 3) {
+                                stockPool.add(new StockExchange(Integer.parseInt(share), ticker_name, Double.parseDouble(price)));
+                                checker = 0;
+//                                ticker_name = "";
+//                                price = "";
+//                                share = "";
                             }
                         }
                     }
-                }
-            }
+                }   
+            } 
+            return false;           
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
+            return false;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         } catch (SAXException e) {
             e.printStackTrace();
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return false; //to-do
     }
 }

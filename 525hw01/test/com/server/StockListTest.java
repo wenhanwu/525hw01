@@ -68,71 +68,71 @@ public class StockListTest {
     /**
      * Test of addNewStock method, of class StockList.
      */
-    @Test
-    public void testAddNewStock1() {
-        System.out.println("addNewStock");
-        String ticker_name = "GOOG";
-//        boolean expResult = false;
-        if (StockList.addNewStock(ticker_name))
-            System.out.println(StockList.getStockPool().toString());
-        else 
-            System.out.println("fail");
-    }
-        /**
-     * Test of update method, of class StockList.
-     */
-    @Test
-    public void testUpdate() {
-        System.out.println("update");
-        String ticker_name = "GOOG";
-        double new_price = 100;
-//        boolean expResult = false;
-        if (StockList.update(ticker_name, new_price))
-            System.out.println(StockList.getStockPool());
-        else
-            System.out.println("fail.");
-
-    }
-    @Test
-    public void testAddNewStock2() {
-        System.out.println("addNewStock");
-        String ticker_name = "YHOO";
-//        boolean expResult = false;
-        if (StockList.addNewStock(ticker_name))
-            System.out.println(StockList.getStockPool().toString());
-        else 
-            System.out.println("fail");
-    }
-    @Test
-    public void testAddNewStock3() {
-        System.out.println("addNewStock");
-        String ticker_name = "AAPL";
-//        boolean expResult = false;
-        if (StockList.addNewStock(ticker_name))
-            System.out.println(StockList.getStockPool().toString());
-        else 
-            System.out.println("fail");
-    }
-    @Test
-    public void testAddNewStock4() {
-        System.out.println("addNewStock");
-        String ticker_name = "MSFT";
-//        boolean expResult = false;
-        if (StockList.addNewStock(ticker_name))
-            System.out.println(StockList.getStockPool().toString());
-        else 
-            System.out.println("fail");
-    }
-    @Test
-    public void testAddNewStock5() {
-        System.out.println("addNewStock");
-        String ticker_name = "BBRY";
-//        boolean expResult = false;
-        if (StockList.addNewStock(ticker_name))
-            System.out.println(StockList.getStockPool().toString());
-        else 
-            System.out.println("fail");
-    }
+//    @Test
+//    public void testAddNewStock1() {
+//        System.out.println("addNewStock");
+//        String ticker_name = "GOOG";
+////        boolean expResult = false;
+//        if (StockList.addNewStock(ticker_name))
+//            System.out.println(StockList.getStockPool().toString());
+//        else 
+//            System.out.println("fail");
+//    }
+//        /**
+//     * Test of update method, of class StockList.
+//     */
+////    @Test
+////    public void testUpdate() {
+////        System.out.println("update");
+////        String ticker_name = "GOOG";
+////        double new_price = 100;
+//////        boolean expResult = false;
+////        if (StockList.update(ticker_name, new_price))
+////            System.out.println(StockList.getStockPool());
+////        else
+////            System.out.println("fail.");
+////
+////    }
+//    @Test
+//    public void testAddNewStock2() {
+//        System.out.println("addNewStock");
+//        String ticker_name = "YHOO";
+////        boolean expResult = false;
+//        if (StockList.addNewStock(ticker_name))
+//            System.out.println(StockList.getStockPool().toString());
+//        else 
+//            System.out.println("fail");
+//    }
+//    @Test
+//    public void testAddNewStock3() {
+//        System.out.println("addNewStock");
+//        String ticker_name = "AAPL";
+////        boolean expResult = false;
+//        if (StockList.addNewStock(ticker_name))
+//            System.out.println(StockList.getStockPool().toString());
+//        else 
+//            System.out.println("fail");
+//    }
+//    @Test
+//    public void testAddNewStock4() {
+//        System.out.println("addNewStock");
+//        String ticker_name = "MSFT";
+////        boolean expResult = false;
+//        if (StockList.addNewStock(ticker_name))
+//            System.out.println(StockList.getStockPool().toString());
+//        else 
+//            System.out.println("fail");
+//    }
+//    @Test
+//    public void testAddNewStock5() {
+//        System.out.println("addNewStock");
+//        String ticker_name = "BBRY";
+////        boolean expResult = false;
+//        if (StockList.addNewStock(ticker_name))
+//            System.out.println(StockList.getStockPool().toString());
+//        else 
+//            System.out.println("fail");
+//    }
 
 
 
@@ -173,15 +173,15 @@ public class StockListTest {
     /**
      * Test of loadStockPoolFromDisk method, of class StockList.
      */
-    @Test
-    public void testSaveStockPoolToDisk() {
-        System.out.println("saveStockPoolToDisk");
-//        boolean expResult = false;
-        System.out.println(StockList.getStockPool());
-        System.out.println( StockList.saveStockPoolToDisk());
-
-        
-    }
+//    @Test
+//    public void testSaveStockPoolToDisk() {
+//        System.out.println("saveStockPoolToDisk");
+////        boolean expResult = false;
+//        System.out.println(StockList.getStockPool());
+//        System.out.println( StockList.saveStockPoolToDisk());
+//
+//        
+//    }
 
     @Test
     public void testLoadStockPoolFromDisk() {
