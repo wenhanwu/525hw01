@@ -153,27 +153,27 @@ public class UserList {
                 balance.appendChild(userList.createTextNode(Double.toString(uList.get(i).getBalance())));
                 user.appendChild(balance);
 
-                Document userStockList = docBuilder.newDocument();
-                Element rootStockElement = userStockList.createElement("stockList");
-                user.appendChild(rootStockElement);
+                Element userStockList = userList.createElement("stockList");
+                user.appendChild(userStockList);
+
+                Element stockExchange = userList.createElement("stockExchange");
+
 
                 for (int j = 0; j < uList.get(i).getStockListofUser().size(); j++) {
-                    Element stockExchange = userStockList.createElement("stockExchange");
-                    rootStockElement.appendChild(stockExchange);
 
-                    Element ticker_name = userStockList.createElement("ticker_name");
-                    ticker_name.appendChild(userStockList.createTextNode(uList.get(i).getStockListofUser().get(j).getTickerName()));
+                    userStockList.appendChild(stockExchange);
+                    Element ticker_name = userList.createElement("ticker_name");
+                    ticker_name.appendChild(userList.createTextNode(uList.get(i).getStockListofUser().get(j).getTickerName()));
                     stockExchange.appendChild(ticker_name);
-                    Element price = userStockList.createElement("price");
-                    price.appendChild(userStockList.createTextNode(Double.toString(uList.get(i).getStockListofUser().get(j).getPrice())));
+                    Element price = userList.createElement("price");
+                    price.appendChild(userList.createTextNode(Double.toString(uList.get(i).getStockListofUser().get(j).getPrice())));
                     stockExchange.appendChild(price);
-                    Element share = userStockList.createElement("share");
-                    share.appendChild(userStockList.createTextNode(Integer.toString(uList.get(i).getStockListofUser().get(j).getShare())));
+                    Element share = userList.createElement("share");
+                    share.appendChild(userList.createTextNode(Integer.toString(uList.get(i).getStockListofUser().get(j).getShare())));
                     stockExchange.appendChild(share);
 
                 }
-                user.appendChild(rootStockElement);
-
+ 
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
