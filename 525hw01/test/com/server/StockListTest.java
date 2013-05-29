@@ -153,18 +153,46 @@ public class StockListTest {
 
     /**
      * Test of updateWholeStockList method, of class StockList.
+//     */
+//    @Test
+//    public void testUpdateWholeStockList() {
+//        System.out.println("updateWholeStockList");
+//        StockList.update("GOOG", 100);
+//        StockList.update("AAPL", 100);
+//        StockList.update("MSFT", 100);
+//        StockList.update("BBRY", 100);
+//        StockList.getStockbyName("AAPL").setShare(900);
+//        
+//        System.out.println(StockList.getStockPool());
+//        StockList.updateWholeStockList();
+//        System.out.println(StockList.getStockPool());
+//    }
+
+   
+
+    /**
+     * Test of loadStockPoolFromDisk method, of class StockList.
      */
     @Test
-    public void testUpdateWholeStockList() {
-        System.out.println("updateWholeStockList");
-        StockList.update("GOOG", 100);
-        StockList.update("AAPL", 100);
-        StockList.update("MSFT", 100);
-        StockList.update("BBRY", 100);
-        StockList.getStockbyName("AAPL").setShare(900);
+    public void testSaveStockPoolToDisk() {
+        System.out.println("saveStockPoolToDisk");
+//        boolean expResult = false;
+        System.out.println(StockList.getStockPool());
+        System.out.println( StockList.saveStockPoolToDisk());
+
         
+    }
+
+    @Test
+    public void testLoadStockPoolFromDisk() {
+        System.out.println("loadStockPoolFromDisk");
+//        boolean expResult = false;
+//        System.out.println(StockList.loadStockPoolFromDisk());
+        StockList.loadStockPoolFromDisk();
         System.out.println(StockList.getStockPool());
-        StockList.updateWholeStockList();
-        System.out.println(StockList.getStockPool());
+//        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+        
     }
 }

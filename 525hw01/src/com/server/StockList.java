@@ -4,13 +4,30 @@
  */
 package com.server;
 
-import com.api.AdminAPI;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * This class contains all the stock in a list, and supplies methods to manipulate the list. 
@@ -119,13 +136,113 @@ public class StockList {
     
     /**
      * This method saves all the information in the stockPool to the disk for persistent storage.
-     * @return 
+     * @return true or false
      */
     public static boolean saveStockPoolToDisk() {
-        return false; //to-do 
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            // root elements
+            Document savedStockList = docBuilder.newDocument();
+            Element rootElement = savedStockList.createElement("stockList");
+            savedStockList.appendChild(rootElement);
+            
+
+            for (int i = 0; i < stockPool.size(); ++i) {
+                // StockExchange elements
+                Element stockExchange = savedStockList.createElement("stockExchange");
+                rootElement.appendChild(stockExchange);
+                
+                Element ticker_name = savedStockList.createElement("ticker_name");
+                ticker_name.appendChild(savedStockList.createTextNode(stockPool.get(i).getTickerName()));
+                stockExchange.appendChild(ticker_name);
+
+                // price elements
+                Element price = savedStockList.createElement("price");
+                price.appendChild(savedStockList.createTextNode(Double.toString(stockPool.get(i).getPrice())));
+                stockExchange.appendChild(price);
+
+                // share elements
+                Element share = savedStockList.createElement("share");
+                share.appendChild(savedStockList.createTextNode(Integer.toString(stockPool.get(i).getShare())));
+                stockExchange.appendChild(share);
+            }
+            // write the content into xml file
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(savedStockList);
+            StreamResult result = new StreamResult(new File("src/com/data/savedStockList.xml"));
+
+            transformer.transform(source, result);
+
+            System.out.println("File saved!");
+            return true;
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+            return false;
+        } catch (TransformerException tfe) {
+            tfe.printStackTrace();
+            return false;
+        }
     }
     
+    /**
+     * This method load the stocklist data from the disk and save into the stockPool.
+     * @return true or false
+     */
     public static boolean loadStockPoolFromDisk() {
+         DocumentBuilderFactory domfac=DocumentBuilderFactory.newInstance();
+        try {         
+            stockPool.clear();
+            DocumentBuilder dombuilder=domfac.newDocumentBuilder();
+            InputStream is=new FileInputStream("src/com/data/savedStockList.xml");            
+            Document doc=dombuilder.parse(is);
+            Element root=doc.getDocumentElement();
+            NodeList stockList=root.getChildNodes();                       
+            
+            if(stockList!=null){
+                for(int i=0;i<stockList.getLength();i++){
+                    Node stockExchange=stockList.item(i);
+                    if(stockExchange.getNodeType()==Node.ELEMENT_NODE){
+                        for(Node node=stockExchange.getFirstChild();node!=null;node=node.getNextSibling()){
+                            if(node.getNodeType()==Node.ELEMENT_NODE){
+                                int checker = 0;
+                                String ticker_name = "";
+                                String price = "";
+                                String share = "";
+                                if(node.getNodeName().equals("ticker_name")){
+                                    ticker_name=node.getFirstChild().getNodeValue();
+                                    ++ checker;
+                                }
+                                if(node.getNodeName().equals("price")){
+                                    price=node.getFirstChild().getNodeValue();
+                                    ++ checker;
+                                }                                
+                                if(node.getNodeName().equals("share")){
+                                    share=node.getFirstChild().getNodeValue();
+                                    ++ checker;
+                                }
+                                if (checker == 3) {
+                                    stockPool.add(new StockExchange(Integer.parseInt(share), ticker_name, Double.parseDouble(price)));
+                                    System.out.println(price);
+                                    System.out.println(share);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false; //to-do
     }
 }
