@@ -5,7 +5,9 @@
 package com.api;
 
 import com.server.Stock;
+import com.server.StockExchange;
 import java.lang.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,11 +15,13 @@ import java.lang.*;
  */
 public interface UserAPI {
 
-    public double getPrice(String ticker_name);
+    public double getBoughtPrice(String ticker_name);
 
-    public boolean buy(String ticker_name, int num_stocks);
+    public int buy(String ticker_name, int num_stocks);
 
-    public boolean sell(String ticker_name, int num_stocks);
+    public int sell(String ticker_name, int num_stocks);
 
-    public Stock getStockList();
+    public ArrayList<StockExchange> getStockListofUser();
+    
+    public int displayStocksHold();
 }

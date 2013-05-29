@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author w
  */
-public class User implements UserAPI{
+public class User implements UserAPI {
 
     private int userID;
     private String userName;
@@ -47,20 +47,6 @@ public class User implements UserAPI{
     }
 
     /**
-     *
-     * @param ticker_name
-     * @return
-     */
-    public int ifHasStock(String ticker_name) {
-        for (int i = 0; i < sEList.size(); i++) {
-            if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
-                return sEList.get(i).getShare();
-            }
-        }
-        return 0;
-    }
-    
-    /**
      * @return the balance
      */
     public int getBalance() {
@@ -74,23 +60,113 @@ public class User implements UserAPI{
         this.balance = balance;
     }
 
+    /**
+     *
+     * @param ticker_name
+     * @return
+     */
+    public StockExchange fetchStock(String ticker_name) {
+        for (int i = 0; i < sEList.size(); i++) {
+            if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
+                return sEList.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * get the price for the specific stock in the User's personal stock list.
+     *
+     * @param ticker_name
+     * @return price
+     * @return -1 Cannot find the stock.
+     *
+     */
     @Override
-    public double getPrice(String ticker_name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double getBoughtPrice(String ticker_name) {
+        for (int i = 0; i < sEList.size(); i++) {
+            if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
+                return sEList.get(i).getPrice();
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Return the User's personal stock list.
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<StockExchange> getStockListofUser() {
+        return sEList;
+    }
+
+    /**
+     *
+     * @param ticker_name
+     * @param num_stocks
+     * @return 0 Successful
+     * @return -1 Cannot find the stock
+     * @return 1 Share in the Market is not enough for buying
+     * @return 2 Balance the user has is not enough
+     */
+    @Override
+    public int buy(String ticker_name, int num_stocks) {
+        if (!StockList.getStockbyName(ticker_name).equals(null)) {
+            if (StockList.getStockbyName(ticker_name).getShare() >= num_stocks) {
+                if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks > getBalance()) {
+                    //Update the share in user's list
+                    fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() + num_stocks);
+                    //Update the price in user's list
+                    fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
+                    //Update the share in Market's list
+                    StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() - num_stocks);
+                    return 0;//Successful
+                } else {
+                    return 2;
+                }
+            } else {
+                return 1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     *
+     * @param ticker_name
+     * @param num_stocks
+     * @return 0 Successful
+     * @return -1 Cannot find the stock in the
+     * @return 1 Share is not enough for selling
+     */
+    @Override
+    public int sell(String ticker_name, int num_stocks) {
+        if (!fetchStock(ticker_name).equals(null)) {
+            if (fetchStock(ticker_name).getShare() >= num_stocks) {
+                //Update the share in user's list
+                fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() - num_stocks);
+                //Update the price in user's list
+                fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
+                //Update the share in Market's list
+                StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() - num_stocks);
+                return 0;//Successful
+            } else {
+                return 1;
+            }
+        } else {
+            return -1;
+        }
     }
 
     @Override
-    public Stock getStockList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean buy(String ticker_name, int num_stocks) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean sell(String ticker_name, int num_stocks) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int displayStocksHold() {
+        System.out.println("Stock Name-----Shares Hold-----Price of Last Trade");
+        for (int i = 0; i < sEList.size(); i++) {
+            System.out.println((sEList.get(i)).getTickerName() + "  " + (sEList.get(i)).getShare() + "   " + (sEList.get(i)).getPrice());
+        }
+        return 0;
     }
 }
