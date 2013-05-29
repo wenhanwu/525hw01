@@ -140,7 +140,7 @@ public class Client {
 
         Scanner scan = new Scanner(System.in);
         
-        userPrompt();
+        adminPrompt();
         System.out.println("Please input your operation:");
         
         do {
