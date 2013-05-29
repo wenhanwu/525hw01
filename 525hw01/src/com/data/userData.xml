@@ -13,12 +13,12 @@ and open the template in the editor.
             <stockExchange>
                 <ticker_name>GOOG</ticker_name>
                 <price>880.4</price>
-                <share>100</share>
+                <share>444</share>
             </stockExchange>
             <stockExchange>
                 <ticker_name>AAPL</ticker_name>
                 <price>440.85</price>
-                <share>100</share>
+                <share>112</share>
             </stockExchange>
         </stockList>
     </user>
@@ -29,12 +29,12 @@ and open the template in the editor.
             <stockExchange>
                 <ticker_name>MSFT</ticker_name>
                 <price>34.41</price>
-                <share>1000</share>
+                <share>233</share>
             </stockExchange>
             <stockExchange>
                 <ticker_name>AAPL</ticker_name>
                 <price>440.85</price>
-                <share>100</share>
+                <share>111</share>
             </stockExchange>
         </stockList>
     </user>
@@ -45,12 +45,12 @@ and open the template in the editor.
             <stockExchange>
                 <ticker_name>GOOG</ticker_name>
                 <price>880.4</price>
-                <share>100</share>
+                <share>222</share>
             </stockExchange>
             <stockExchange>
                 <ticker_name>BBRY</ticker_name>
                 <price>14.31</price>
-                <share>1000</share>
+                <share>88</share>
             </stockExchange>
         </stockList>
     </user>
