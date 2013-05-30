@@ -174,4 +174,10 @@ public User(String userName, double balance, ArrayList<StockExchange> sEList){
         }
         return 0;
     }
+    
+    public String test()
+    {
+        System.out.println("test func in UserAPI");
+        return "test!";
+    }
 }

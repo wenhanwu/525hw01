@@ -5,11 +5,12 @@
 package com.api;
 import com.server.Stock;
 import java.lang.*;
+import java.rmi.Remote;
 /**
  *
  * @author jingboyu
  */
-public interface ServerAPI {
+public interface ServerAPI extends Remote {
     
 	public boolean isConnect();
     	public boolean isAdmin(String user_name); // return true when the user is the admin, reture false otherwise.
