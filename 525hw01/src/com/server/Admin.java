@@ -38,7 +38,6 @@ public class Admin implements AdminAPI {
 //    public ArrayList<StockExchange> getStockList() {
 //        return StockList.getStockPool();
 //    }
-
     /**
      * Find the stock by its name and update it
      *
@@ -48,13 +47,7 @@ public class Admin implements AdminAPI {
      */
     @Override
     public boolean update(String ticker_name, double new_price) {
-        if (StockList.getStockbyName(ticker_name) != null) {
-            StockList.update(ticker_name, new_price);
-            return true;
-        } else {
-            return false;
-        }
-
+        return StockList.update(ticker_name, new_price);
     }
 
     /**
@@ -64,12 +57,12 @@ public class Admin implements AdminAPI {
      */
     @Override
     public String displayMarketStocks() {
-        String returnStr="";
-        returnStr+="Stock Name-----Shares Hold-----Price of Last Trade\n";
+        String returnStr = "";
+        returnStr += "Stock Name-----Shares Hold-----Price of Last Trade\n";
         for (int i = 0; i < StockList.getStockPool().size(); i++) {
-            returnStr+=((StockList.getStockPool().get(i)).getTickerName() + "  "
+            returnStr += ((StockList.getStockPool().get(i)).getTickerName() + "  "
                     + (StockList.getStockPool().get(i)).getShare() + "   "
-                    + (StockList.getStockPool().get(i)).getPrice()+"\n");
+                    + (StockList.getStockPool().get(i)).getPrice() + "\n");
         }
         return returnStr;
     }
