@@ -29,15 +29,15 @@ public class Admin implements AdminAPI {
         this.adminName = adminName;
     }
 
-    /**
-     * Get the Market stock List
-     *
-     * @return
-     */
-    @Override
-    public ArrayList<StockExchange> getStockList() {
-        return StockList.getStockPool();
-    }
+//    /**
+//     * Get the Market stock List
+//     *
+//     * @return
+//     */
+//    @Override
+//    public ArrayList<StockExchange> getStockList() {
+//        return StockList.getStockPool();
+//    }
 
     /**
      * Find the stock by its name and update it
@@ -63,13 +63,14 @@ public class Admin implements AdminAPI {
      * @return
      */
     @Override
-    public int displayMarketStocks() {
-        System.out.println("Stock Name-----Shares Hold-----Price of Last Trade");
+    public String displayMarketStocks() {
+        String returnStr="";
+        returnStr+="Stock Name-----Shares Hold-----Price of Last Trade\n";
         for (int i = 0; i < StockList.getStockPool().size(); i++) {
-            System.out.println((StockList.getStockPool().get(i)).getTickerName() + "  "
+            returnStr+=((StockList.getStockPool().get(i)).getTickerName() + "  "
                     + (StockList.getStockPool().get(i)).getShare() + "   "
-                    + (StockList.getStockPool().get(i)).getPrice());
+                    + (StockList.getStockPool().get(i)).getPrice()+"\n");
         }
-        return 0;
+        return returnStr;
     }
 }
