@@ -21,4 +21,4 @@ public interface AdminAPI extends Remote {
 
     public String displayMarketStocks() throws RemoteException;
     
-
+}

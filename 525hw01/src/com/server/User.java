@@ -92,7 +92,7 @@ public class User implements UserAPI {
      * @return price
      *
      */
-    @Override
+
     public double getBoughtPrice(String ticker_name) {
         for (int i = 0; i < sEList.size(); i++) {
             if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
@@ -107,7 +107,7 @@ public class User implements UserAPI {
      *
      * @return
      */
-    @Override
+    
     public ArrayList<StockExchange> getStockListofUser() {
         return sEList;
     }
@@ -172,12 +172,13 @@ public class User implements UserAPI {
      * @return
      */
     @Override
-    public int displayStocksHold() {
-        System.out.println("Stock Name-----Shares Hold-----Price of Last Trade");
+    public String displayStocksHold() {
+        String returnStr="";
+        returnStr+="Stock Name-----Shares Hold-----Price of Last Trade\n";
         for (int i = 0; i < sEList.size(); i++) {
-            System.out.println((sEList.get(i)).getTickerName() + "  " + (sEList.get(i)).getShare() + "   " + (sEList.get(i)).getPrice());
+            returnStr+=((sEList.get(i)).getTickerName() + "  " + (sEList.get(i)).getShare() + "   " + (sEList.get(i)).getPrice()+"\n");
         }
-        return 0;
+        return returnStr;
     }
 
     /**
