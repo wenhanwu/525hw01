@@ -34,7 +34,7 @@ public class Stock {
         return price;
     }
 
-    public void setPrice(double price) {
+    public synchronized void setPrice(double price) {
         this.price = price;
     }
        

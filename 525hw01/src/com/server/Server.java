@@ -15,24 +15,36 @@ import java.util.ArrayList;
  *
  * @author jingboyu
  */
-public class Server 
-{
-        public Server() {}
+public class Server {
 
-        public static void main(String args[]) {
+    private static final int PORT = 1099;
+    private static Registry registry;
 
-            try {
-                User obj = new User("Jane Doe", 1100, new ArrayList<StockExchange>());
-                UserAPI stub = (UserAPI) UnicastRemoteObject.exportObject(obj, 0);
+    public Server() {
+    }
 
-                // Bind the remote object's stub in the registry
-                Registry registry = LocateRegistry.getRegistry();
-                registry.bind("UserAPI", stub);
+    public static void main(String args[]) {
 
-                System.err.println("UserAPI Server ready");
-            } catch (Exception e) {
-                System.err.println("Server exception: " + e.toString());
-                e.printStackTrace();
+        try {
+            User obj = new User("Jane Doe", 1100, new ArrayList<StockExchange>());
+            UserAPI stub = (UserAPI) UnicastRemoteObject.exportObject(obj, 0);
+
+            // Bind the remote object's stub in the registry
+            registry = LocateRegistry.createRegistry(PORT);
+            registry.bind("UserAPI", stub);
+            StockList.loadStockPoolFromDisk(); //true or false
+            
+            System.err.println("UserAPI Server ready");
+
+            while (true) {
+                StockList.updateWholeStockList();
+                Thread.sleep(1000);
+                System.out.println(StockList.getStockPool());
             }
-        }  
+
+        } catch (Exception e) {
+            System.err.println("Server exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
 }
