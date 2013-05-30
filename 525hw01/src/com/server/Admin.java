@@ -43,7 +43,8 @@ public class Admin implements AdminAPI {
      *
      * @param ticker_name
      * @param new_price
-     * @return
+     * @return true Successful
+     * @return false Cannot find in the list
      */
     @Override
     public boolean update(String ticker_name, double new_price) {
