@@ -53,17 +53,21 @@ public class StockListTest {
 
     /**
      * Test of getStockbyName method, of class StockList.
-//     */
-//    @Test
-//    public void testGetStockbyName() {
-//        System.out.println("getStockbyName");
-//        String ticker_name = "";
+     */
+    @Test
+    public void testGetStockbyName() {
+        System.out.println("getStockbyName");
+        String ticker_name = "ABAD";
 //        StockExchange expResult = null;
-//        StockExchange result = StockList.getStockbyName(ticker_name);
+        StockExchange result = null; 
+        StockList.loadStockPoolFromDisk();
+            result = StockList.getStockbyName(ticker_name);
+        System.out.println(result);
+        System.out.println(StockList.getStockPool());
 //        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
+        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
-//    }
+    }
 
     /**
      * Test of addNewStock method, of class StockList.
@@ -183,16 +187,16 @@ public class StockListTest {
 //        
 //    }
 
-    @Test
-    public void testLoadStockPoolFromDisk() {
-        System.out.println("loadStockPoolFromDisk");
-//        boolean expResult = false;
-//        System.out.println(StockList.loadStockPoolFromDisk());
-        StockList.loadStockPoolFromDisk();
-        System.out.println(StockList.getStockPool());
-//        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-        
-    }
+//    @Test
+//    public void testLoadStockPoolFromDisk() {
+//        System.out.println("loadStockPoolFromDisk");
+////        boolean expResult = false;
+////        System.out.println(StockList.loadStockPoolFromDisk());
+//        StockList.loadStockPoolFromDisk();
+//        System.out.println(StockList.getStockPool());
+////        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+////        fail("The test case is a prototype.");
+//        
+//    }
 }

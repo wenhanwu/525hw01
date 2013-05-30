@@ -64,14 +64,20 @@ public class StockList {
      */
     public static StockExchange getStockbyName(String ticker_name) {
         if (stockPool.isEmpty()) {
-            return null;
+            if (addNewStock(ticker_name))
+                return stockPool.get(0);
+            else 
+                return null;
         }
         for (int i = 0; i < stockPool.size(); ++i) {
             if (stockPool.get(i).isSameStock(ticker_name)) {
                 return stockPool.get(i);
             }
         }
-        return null;
+        if (addNewStock(ticker_name))
+            return stockPool.get(stockPool.size()-1);
+        else
+            return null;
     }
 
     /**
@@ -79,11 +85,11 @@ public class StockList {
      * ticker_name is first queried.
      *
      * @param ticker_name
-     * @return
+     * @return true if correctly added.
      */
     public static boolean addNewStock(String ticker_name) {
         Stock newStock = getStockInfoFromYahooFinancial(ticker_name);
-        if (newStock.getPrice() != -1) {
+        if (newStock != null && newStock.getPrice() != -1) {
             StockExchange st = new StockExchange(StockList.INITIAL_SHARES, newStock);
 //            stockPool.add(new StockExchange(StockList.INITIAL_SHARES, newStock));
             stockPool.add(st);
@@ -138,7 +144,7 @@ public class StockList {
             URLConnection yc = yahooFinance.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
             String inputLine;
-            if ((inputLine = in.readLine()) != null) {
+            if (!(inputLine = in.readLine()).equals("N/A")) {
                 stockPrice = Double.parseDouble(inputLine);
             }
             in.close();
@@ -255,7 +261,7 @@ public class StockList {
                     }
                 }
             }
-            return false;
+            return true;
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
             return false;
