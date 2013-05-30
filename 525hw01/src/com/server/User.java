@@ -13,24 +13,10 @@ import java.util.ArrayList;
  */
 public class User implements UserAPI {
 
-    //private int userID;
     private String userName;
     private double balance;
     private ArrayList<StockExchange> sEList = new ArrayList();
 
-//    /**
-//     * @return the userID
-//     */
-//    public int getUserID() {
-//        return userID;
-//    }
-//
-//    /**
-//     * @param userID the userID to set
-//     */
-//    public void setUserID(int userID) {
-//        this.userID = userID;
-//    }
     /**
      *
      * @param userName
@@ -86,17 +72,17 @@ public class User implements UserAPI {
     }
 
     /**
-     * get the price for the specific stock in the User's personal stock list.
+     * get the market price for the specific stock.
      *
      * @param ticker_name
-     * @return price
+     * @return double price
+     * @return -1 Cannot find the stock in the market
      *
      */
-
-    public double getBoughtPrice(String ticker_name) {
-        for (int i = 0; i < sEList.size(); i++) {
-            if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
-                return sEList.get(i).getPrice();
+    public double getMarketPrice(String ticker_name) {
+        for (int i = 0; i < StockList.getStockPool().size(); i++) {
+            if ((StockList.getStockPool().get(i)).getTickerName().equals(ticker_name)) {
+                return StockList.getStockPool().get(i).getPrice();
             }
         }
         return -1;
@@ -107,7 +93,6 @@ public class User implements UserAPI {
      *
      * @return
      */
-    
     public ArrayList<StockExchange> getStockListofUser() {
         return sEList;
     }
@@ -117,6 +102,9 @@ public class User implements UserAPI {
      * @param ticker_name
      * @param num_stocks
      * @return 0 Successful
+     * @return -1 Cannot find the stock in Yahoo Finance
+     * @return 1 Share in the Market is not enough for buying
+     * @return 2 Balance the user has is not enough
      */
     @Override
     public int buy(String ticker_name, int num_stocks) {
@@ -146,6 +134,8 @@ public class User implements UserAPI {
      * @param ticker_name
      * @param num_stocks
      * @return 0 Successful
+     * @return -1 Cannot find the stock in the current User's account
+     * @return 1 Share is not enough
      */
     @Override
     public int sell(String ticker_name, int num_stocks) {
@@ -173,10 +163,10 @@ public class User implements UserAPI {
      */
     @Override
     public String displayStocksHold() {
-        String returnStr="";
-        returnStr+="Stock Name-----Shares Hold-----Price of Last Trade\n";
+        String returnStr = "";
+        returnStr += "Stock Name-----Shares Hold-----Price of Last Trade\n";
         for (int i = 0; i < sEList.size(); i++) {
-            returnStr+=((sEList.get(i)).getTickerName() + "  " + (sEList.get(i)).getShare() + "   " + (sEList.get(i)).getPrice()+"\n");
+            returnStr += ((sEList.get(i)).getTickerName() + "  " + (sEList.get(i)).getShare() + "   " + (sEList.get(i)).getPrice() + "\n");
         }
         return returnStr;
     }
