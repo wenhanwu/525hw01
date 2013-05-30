@@ -13,24 +13,10 @@ import java.util.ArrayList;
  */
 public class User implements UserAPI {
 
-    //private int userID;
     private String userName;
     private double balance;
     private ArrayList<StockExchange> sEList = new ArrayList();
 
-//    /**
-//     * @return the userID
-//     */
-//    public int getUserID() {
-//        return userID;
-//    }
-//
-//    /**
-//     * @param userID the userID to set
-//     */
-//    public void setUserID(int userID) {
-//        this.userID = userID;
-//    }
     /**
      *
      * @param userName
@@ -90,7 +76,7 @@ public class User implements UserAPI {
      *
      * @param ticker_name
      * @return double price
-     * @return -1 Cannot find the stock
+     * @return -1 Cannot find the stock in the market
      *
      */
     public double getMarketPrice(String ticker_name) {
@@ -116,7 +102,7 @@ public class User implements UserAPI {
      * @param ticker_name
      * @param num_stocks
      * @return 0 Successful
-     * @return -1 Cannot find the stock
+     * @return -1 Cannot find the stock in Yahoo Finance
      * @return 1 Share in the Market is not enough for buying
      * @return 2 Balance the user has is not enough
      */
@@ -148,7 +134,7 @@ public class User implements UserAPI {
      * @param ticker_name
      * @param num_stocks
      * @return 0 Successful
-     * @return -1 Cannot find the stock
+     * @return -1 Cannot find the stock in the current User's account
      * @return 1 Share is not enough
      */
     @Override
