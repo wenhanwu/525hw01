@@ -32,14 +32,21 @@ public class UserList {
 
     private static ArrayList<User> uList = new ArrayList();
 
-//    public static User fetchByUserID(int ID) {
-//        for (int i = 0; i < uList.size(); i++) {
-//            if ((uList.get(i)).getUserID() == ID) {
-//                return uList.get(i);
-//            }
-//        }
-//        return null;
-//    }
+    /**
+     *
+     * @param userName
+     * @return The User OBJ
+     * @return null Cannot find the User in the User List
+     */
+    public static User fetchByUserName(String userName) {
+        for (int i = 0; i < uList.size(); i++) {
+            if ((uList.get(i)).getUserName().equals(userName)) {
+                return uList.get(i);
+            }
+        }
+        return null;
+    }
+
     /**
      * Load the user data from the xml file userData.xml.
      *

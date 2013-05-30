@@ -13,22 +13,7 @@ import java.util.ArrayList;
  */
 public class Admin implements AdminAPI {
 
-    private int adminID;
     private String adminName;
-
-    /**
-     * @return the adminID
-     */
-    public int getAdminID() {
-        return adminID;
-    }
-
-    /**
-     * @param adminID the adminID to set
-     */
-    public void setAdminID(int adminID) {
-        this.adminID = adminID;
-    }
 
     /**
      * @return the adminName

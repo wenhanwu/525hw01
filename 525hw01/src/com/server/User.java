@@ -31,12 +31,18 @@ public class User implements UserAPI {
 //    public void setUserID(int userID) {
 //        this.userID = userID;
 //    }
-public User(String userName, double balance, ArrayList<StockExchange> sEList){
-    this.userName=userName;
-    this.balance=balance;
-    this.sEList=sEList;
-    
-}
+    /**
+     *
+     * @param userName
+     * @param balance
+     * @param sEList
+     */
+    public User(String userName, double balance, ArrayList<StockExchange> sEList) {
+        this.userName = userName;
+        this.balance = balance;
+        this.sEList = sEList;
+    }
+
     /**
      * @return the userName
      */
@@ -84,7 +90,6 @@ public User(String userName, double balance, ArrayList<StockExchange> sEList){
      *
      * @param ticker_name
      * @return price
-     * @return -1 Cannot find the stock.
      *
      */
     @Override
@@ -112,9 +117,6 @@ public User(String userName, double balance, ArrayList<StockExchange> sEList){
      * @param ticker_name
      * @param num_stocks
      * @return 0 Successful
-     * @return -1 Cannot find the stock
-     * @return 1 Share in the Market is not enough for buying
-     * @return 2 Balance the user has is not enough
      */
     @Override
     public int buy(String ticker_name, int num_stocks) {
@@ -144,8 +146,6 @@ public User(String userName, double balance, ArrayList<StockExchange> sEList){
      * @param ticker_name
      * @param num_stocks
      * @return 0 Successful
-     * @return -1 Cannot find the stock in the
-     * @return 1 Share is not enough for selling
      */
     @Override
     public int sell(String ticker_name, int num_stocks) {
@@ -166,6 +166,11 @@ public User(String userName, double balance, ArrayList<StockExchange> sEList){
         }
     }
 
+    /**
+     * Display the stock the User has
+     *
+     * @return
+     */
     @Override
     public int displayStocksHold() {
         System.out.println("Stock Name-----Shares Hold-----Price of Last Trade");
@@ -174,9 +179,13 @@ public User(String userName, double balance, ArrayList<StockExchange> sEList){
         }
         return 0;
     }
-    
-    public String test()
-    {
+
+    /**
+     * Just for test...
+     *
+     * @return
+     */
+    public String test() {
         System.out.println("test func in UserAPI");
         return "test!";
     }

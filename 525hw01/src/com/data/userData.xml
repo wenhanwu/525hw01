@@ -7,7 +7,7 @@ and open the template in the editor.
 
 <userList>
     <user>
-        <userName>w</userName>
+        <userName>Tom Lee</userName>
         <balance>1000</balance>
         <stockList>
             <stockExchange>
@@ -23,7 +23,7 @@ and open the template in the editor.
         </stockList>
     </user>
     <user>
-        <userName>q</userName>
+        <userName>Jason Wang</userName>
         <balance>1000</balance>
         <stockList>
             <stockExchange>
@@ -39,7 +39,7 @@ and open the template in the editor.
         </stockList>
     </user>
     <user>
-        <userName>y</userName>
+        <userName>Kate Zhang</userName>
         <balance>1000</balance>
         <stockList>
             <stockExchange>
