@@ -250,7 +250,7 @@ public class Client {
                 
             } else if (userInput.equalsIgnoreCase("l")) { //user selection: list my stocks
                 try {
-                    user.displayStocksHold();
+                    System.out.println(user.displayStocksHold());
 
 
                 } catch (Exception e) {
