@@ -22,8 +22,8 @@ import java.util.logging.Logger;
  */
 public class Client {
 
-    private static String userName = ""; 
-    
+    private static String userName = "";
+
     public static int welcome() {			//start
 
         int type = 0; // return user type, 0 means user name not exist, 1 means ordinary user, 2 means admin
@@ -31,7 +31,7 @@ public class Client {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Please input your username (q to quit) :");
-          System.out.println("(Usage: [USER name] or [ADMIN name])");
+        System.out.println("(Usage: [USER name] or [ADMIN name])");
         do {
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {
@@ -40,31 +40,26 @@ public class Client {
 
             // get user type or add new user
             try {
-                if(userInput.startsWith("USER", 0))
-                {
+                if (userInput.startsWith("USER", 0)) {
                     type = 1;
                     userName = userInput.substring(5);
                     break;
-                }
-                else if(userInput.startsWith("ADMIN", 0))
-                {
+                } else if (userInput.startsWith("ADMIN", 0)) {
                     type = 2;
                     userName = userInput.substring(5);
                     break;
-                }
-                else
-                {
+                } else {
                     System.out.println("Invalid user type!");
                     break;
                 }
 //                stub.returnUserType(type);
-                
-            }catch (Exception e) {
+
+            } catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
                 e.printStackTrace();
-                }
-        
-        
+            }
+
+
 //                if (stub.isValidUser(userInput)) {
 //                    userName = userInput;
 //                    if (stub.isAdmin(userInput)) {
@@ -111,9 +106,9 @@ public class Client {
     public static int tradeForUser(UserAPI user) {			//start
 
         Scanner scan = new Scanner(System.in);
-        
-        
-        do {       
+
+
+        do {
             userPrompt();
             try {
                 System.out.println("Your balance: " + user.getUserBalance());
@@ -125,25 +120,22 @@ public class Client {
             if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
                 break;
             }
-            
+
             if (userInput.equalsIgnoreCase("s")) // user selection: sell
             {
 
-                try { 
-                    
-                    System.out.println("please input ticker name: ");                   
+                try {
+
+                    System.out.println("please input ticker name: ");
                     String ticker_name = scan.nextLine();
 
                     double price = user.getMarketPrice(ticker_name);
-                    
+
                     //validation on price information
-                    if(price == -1.0)
-                    {
-                       System.out.println("This ticker_name does not exist!"); 
-                       continue;
-                    }
-                    else
-                    {
+                    if (price == -1.0) {
+                        System.out.println("This ticker_name does not exist!");
+                        continue;
+                    } else {
                         int shares = user.getNumShare(ticker_name);
                         if (shares <= 0) {
                             System.out.println("You do not have shares of " + ticker_name);
@@ -152,21 +144,18 @@ public class Client {
                         System.out.println("You have " + shares + " shares of " + ticker_name + ", current price is " + price + ".");
 
                     }
-                    
-                    System.out.println("please input number of shares to sell: ");     
-                    
+
+                    System.out.println("please input number of shares to sell: ");
+
                     //validation
                     int num_stock = scan.nextInt();
-                    
-                    int errorCode= user.sell(ticker_name, num_stock);
- 
+
+                    int errorCode = user.sell(ticker_name, num_stock);
+
                     //output user operation result: fail, success
-                    if(errorCode == 0)
-                    {
+                    if (errorCode == 0) {
                         System.out.println("Sold successfully!");
-                    }
-                    else if(errorCode == 1)
-                    {
+                    } else if (errorCode == 1) {
                         int shares = user.getNumShare(ticker_name);
 //                        if(shares == -1)
 //                        {
@@ -174,11 +163,11 @@ public class Client {
 //                        }
 //                        else
 //                        {
-                            System.out.println("the number of shares are not enough to sell!");
-                            System.out.println("Your have " + shares + " shares of " + ticker_name + ".");
-                            continue;
+                        System.out.println("the number of shares are not enough to sell!");
+                        System.out.println("Your have " + shares + " shares of " + ticker_name + ".");
+                        continue;
 //                        }
-                        
+
                     }
 //                    else if(errorCode == 2)
 //                    {
@@ -196,68 +185,50 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-                
+
             } else if (userInput.equalsIgnoreCase("b")) {   //user selection: buy
                 try {
-                    System.out.println("please input ticker name: ");                   
+                    System.out.println("please input ticker name: ");
                     String ticker_name = scan.nextLine();
-                                        
+
                     double price = user.getMarketPrice(ticker_name);
-                    
+
                     //validation
-                    if(price == -1)
-                    {
-                       System.out.println("Can not get price information!");  
+                    if (price == -1) {
+                        System.out.println("Can not get price information!");
+                    } else {
+                        System.out.println("the current price of " + ticker_name + " is " + price + ".");
                     }
-                    else
-                    {
-                        System.out.println("the current price of " + ticker_name + " is " + price + "."); 
-                    }
-                    
-                    System.out.println("please input number of shares to buy: "); 
-                    
+
+                    System.out.println("please input number of shares to buy: ");
+
                     //validation on user input
                     int num_stock = scan.nextInt();
-                    
+
                     int errorCode = user.buy(ticker_name, num_stock);
- 
+
                     //output user operation result
-                    if (errorCode == 0)
-                    {
+                    if (errorCode == 0) {
                         System.out.println("Transaction done!");
-                    }
-                    else if(errorCode == 0)
-                    {
+                    } else if (errorCode == 0) {
                         System.out.println("Ticker name does not exist!");
-                    }
-                    else if(errorCode == 1)
-                    {
+                    } else if (errorCode == 1) {
                         int shares = user.getAvailableShares(ticker_name);
-                        if(shares == -1)
-                        {
+                        if (shares == -1) {
                             System.out.println("Can not get inforamtion of shares!");
-                        }
-                        else
-                        {
+                        } else {
                             System.out.println("There is no enough shares to buy!");
                             System.out.println("The current number of shares of " + ticker_name + " available to buy is " + shares + ".");
                         }
-                    }
-                    else if(errorCode == 2)
-                    {
+                    } else if (errorCode == 2) {
                         double balance = user.getUserBalance();
-                        if(balance == -1)
-                        {
-                           System.out.println("Can not find user balance information!"); 
-                        }
-                        else
-                        {
+                        if (balance == -1) {
+                            System.out.println("Can not find user balance information!");
+                        } else {
                             System.out.println("There is no enough balance!");
                             System.out.println("Your current balance is " + balance);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("Never been here!");
                     }
 
@@ -266,7 +237,7 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-                
+
             } else if (userInput.equalsIgnoreCase("l")) { //user selection: list my stocks
                 try {
                     System.out.println(user.displayStocksHold());
@@ -276,9 +247,9 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-                
+
             } else {
-                
+
                 System.out.println("Invalid input! Please select your operation:");
             }
 
@@ -286,45 +257,40 @@ public class Client {
         } while (true);
 
 
-        return 1;        
+        return 1;
     }
 
     public static int tradeForAdmin(AdminAPI admin) {			//start
-        
+
         Scanner scan = new Scanner(System.in);
-        
+
         adminPrompt();
-        
+
         do {
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {  //admin selection: quit
                 break;
             }
-            
+
             if (userInput.equalsIgnoreCase("u")) // admin selection: update
             {
 
                 try {
-                   
+
                     //user input need validation
-                    System.out.println("please input ticker name: ");                   
+                    System.out.println("please input ticker name: ");
                     String ticker_name = scan.nextLine();
-                    System.out.println("please input new price: ");  
-                    
+                    System.out.println("please input new price: ");
+
                     //validation on user input
                     double new_price = scan.nextInt();
-                    
+
                     boolean errorCode = admin.update(ticker_name, new_price);
-                    if(errorCode == true)
-                    {
+                    if (errorCode == true) {
                         System.out.println("Ticker is successfully updated");
-                    }
-                    else if(errorCode == false)
-                    {
+                    } else if (errorCode == false) {
                         System.out.println("Ticker update failed!");
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("Never been here!");
                     }
 
@@ -333,7 +299,7 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-                
+
             } else if (userInput.equalsIgnoreCase("l")) {   //admin selection: list stock list
                 try {
                     System.out.println(admin.displayMarketStocks());
@@ -343,9 +309,9 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-                
+
             } else {
-                
+
                 System.out.println("Invalid input! Please select your operation:");
             }
 
@@ -353,40 +319,38 @@ public class Client {
         } while (true);
 
 
-        return 1;        
+        return 1;
     }
 
     public static void main(String[] args) {
 
         String host = (args.length < 1) ? null : args[0];
 
-        
+
         try {
             Registry registry = LocateRegistry.getRegistry(host);
 //            ServerAPI stub = (ServerAPI) registry.lookup("ServerAPI");
 //            if (stub.isConnect()) // query ServerAPI for connection
 //            {
-                System.out.println("Server connected!");
-                int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
-                if (type == 1) {
-                     UserAPI user = (UserAPI) registry.lookup("UserAPI");
-                     user.populateCurrentUser(userName);
-                    tradeForUser(user);// call user operations
-                } else if (type == 2) {
-                    AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
-                    tradeForAdmin(admin); // call admin operations
-                } else {
-                    System.out.println("Never been here!");
-                }
+            System.out.println("Server connected!");
+            int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
+            if (type == 1) {
+                UserAPI user = (UserAPI) registry.lookup("UserAPI");
+                user.populateCurrentUser(userName);
+                tradeForUser(user);// call user operations
+            } else if (type == 2) {
+                AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
+                tradeForAdmin(admin); // call admin operations
+            } else {
+                System.out.println("Never been here!");
+            }
 //            }  
-        }
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }
-        
-        
+
+
 //        try {
 //            Registry registry = LocateRegistry.getRegistry(host);
 //            UserAPI user = (UserAPI) registry.lookup("UserAPI");
