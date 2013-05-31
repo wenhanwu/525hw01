@@ -159,7 +159,7 @@ public class User implements UserAPI {
                     //Update the price in user's list
                     fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
                     //Update the share in Market's list
-                    StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() + num_stocks);
+                    StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() - num_stocks);
                     this.balance=this.balance-StockList.getStockbyName(ticker_name).getPrice() * num_stocks;
                     return 0;//Successful
                 } else {
@@ -190,7 +190,7 @@ public class User implements UserAPI {
                 //Update the price in user's list
                 fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
                 //Update the share in Market's list
-                StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() - num_stocks);
+                StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() + num_stocks);
                 this.balance=this.balance+StockList.getStockbyName(ticker_name).getPrice()*num_stocks;
                 return 0;//Successful
             } else {
