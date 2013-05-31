@@ -17,6 +17,12 @@ public class User implements UserAPI {
     private double balance;
     private ArrayList<StockExchange> sEList = new ArrayList();
 
+    public User(String userName, double balance) {
+        this.userName = userName;
+        this.balance = balance;
+    }
+
+    
     /**
      *
      * @param userName
@@ -72,7 +78,24 @@ public class User implements UserAPI {
     }
 
     /**
-     * get the market price for the specific stock.
+     * Get the available shares in the market for the specific stock.
+     *
+     * @param ticker_name
+     * @return int Share
+     * @return -1 Cannot find the stock in the market
+     *
+     */
+    public int getAvailableShare(String ticker_name) {
+        StockExchange stockEx = StockList.getStockbyName(ticker_name);
+        if (stockEx==null) {
+            return -1;
+        } else {
+            return stockEx.getShare();
+        }
+    }
+
+    /**
+     * Get the market price for the specific stock.
      *
      * @param ticker_name
      * @return double price
@@ -80,9 +103,26 @@ public class User implements UserAPI {
      *
      */
     public double getMarketPrice(String ticker_name) {
-        for (int i = 0; i < StockList.getStockPool().size(); i++) {
-            if ((StockList.getStockPool().get(i)).getTickerName().equals(ticker_name)) {
-                return StockList.getStockPool().get(i).getPrice();
+        StockExchange stockEx = StockList.getStockbyName(ticker_name);
+        if (stockEx==null) {
+            return -1.0;
+        } else {
+            return stockEx.getPrice();
+        }
+    }
+
+    /**
+     * Get the shared number for the specific stock.
+     *
+     * @param ticker_name
+     * @return int shared number for the specific stock
+     * @return -1 Cannot find the stock in the market
+     *
+     */
+    public int getNumShare(String ticker_name) {
+        for (int i = 0; i < sEList.size(); i++) {
+            if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
+                return sEList.get(i).getShare();
             }
         }
         return -1;
@@ -108,7 +148,7 @@ public class User implements UserAPI {
      */
     @Override
     public int buy(String ticker_name, int num_stocks) {
-        if (!StockList.getStockbyName(ticker_name).equals(null)) {
+        if (StockList.getStockbyName(ticker_name)!=(null)) {
             if (StockList.getStockbyName(ticker_name).getShare() >= num_stocks) {
                 if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks > getBalance()) {
                     //Update the share in user's list
@@ -139,7 +179,7 @@ public class User implements UserAPI {
      */
     @Override
     public int sell(String ticker_name, int num_stocks) {
-        if (!fetchStock(ticker_name).equals(null)) {
+        if (fetchStock(ticker_name)!=(null)) {
             if (fetchStock(ticker_name).getShare() >= num_stocks) {
                 //Update the share in user's list
                 fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() - num_stocks);
