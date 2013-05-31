@@ -36,8 +36,6 @@ public class Client {
 
             // get user type or add new user
             try {
-                Registry registry = LocateRegistry.getRegistry(host);
-                Client stub = (Client) registry.lookup("ServerAPI");
                 if(userInput.startsWith("USER", 4))
                 {
                     type = 1;
@@ -103,7 +101,7 @@ public class Client {
 
     }
 
-    public static int tradeForUser(String userName) {			//start
+    public static int tradeForUser(UserAPI user, String userName) {			//start
 
         Scanner scan = new Scanner(System.in);
         
@@ -111,21 +109,21 @@ public class Client {
         
         do {
             String userInput = scan.nextLine();
-            if (userInput.equalsIgnoreCase("q")) {
+            if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
                 break;
             }
             
-            if (userInput.equalsIgnoreCase("s")) // to do. equals() inconsistent type fix for later debug
+            if (userInput.equalsIgnoreCase("s")) // user selection: sell
             {
 
-                try {
-                    Registry registry = LocateRegistry.getRegistry(host);
-                    UserAPI user = (UserAPI) registry.lookup("UserAPI"); 
+                try { 
                     
                     System.out.println("please input ticker name: ");                   
                     String ticker_name = scan.nextLine();
                     
                     double price = user.getMarketPrice(ticker_name);
+                    
+                    //validation on price information
                     if(price == -1)
                     {
                        System.out.println("Can not get price information!");  
@@ -137,10 +135,12 @@ public class Client {
                     
                     System.out.println("please input number of shares to sell: ");     
                     
+                    //validation
                     int num_stock = scan.nextInt();
                     
                     int errorCode= user.sell(ticker_name, num_stock);
  
+                    //output user operation result: fail, success
                     if(errorCode == 0)
                     {
                         System.out.println("Ticker name does not exist!");
@@ -176,14 +176,14 @@ public class Client {
                     e.printStackTrace();
                 }
                 
-            } else if (userInput.equalsIgnoreCase("b")) {
+            } else if (userInput.equalsIgnoreCase("b")) {   //user selection: buy
                 try {
-                    Registry registry = LocateRegistry.getRegistry(host);
-                    UserAPI user = (UserAPI) registry.lookup("UserAPI");
                     System.out.println("please input ticker name: ");                   
                     String ticker_name = scan.nextLine();
                                         
                     double price = user.getMarketPrice(ticker_name);
+                    
+                    //validation
                     if(price == -1)
                     {
                        System.out.println("Can not get price information!");  
@@ -193,12 +193,19 @@ public class Client {
                         System.out.println("the current price of " + ticker_name + " is " + price + "."); 
                     }
                     
-                    System.out.println("please input number of shares to buy: ");       
+                    System.out.println("please input number of shares to buy: "); 
+                    
+                    //validation on user input
                     int num_stock = scan.nextInt();
                     
                     int errorCode = user.buy(ticker_name, num_stock);
  
-                    if(errorCode == 0)
+                    //output user operation result
+                    if (errorCode == 0)
+                    {
+                        System.out.println("Transaction done!");
+                    }
+                    else if(errorCode == 0)
                     {
                         System.out.println("Ticker name does not exist!");
                     }
@@ -239,10 +246,8 @@ public class Client {
                     e.printStackTrace();
                 }
                 
-            } else if (userInput.equalsIgnoreCase("l")) {
+            } else if (userInput.equalsIgnoreCase("l")) { //user selection: list my stocks
                 try {
-                    Registry registry = LocateRegistry.getRegistry(host);
-                    UserAPI user = (UserAPI) registry.lookup("UserAPI");
                     user.displayStocksHold();
 
 
@@ -263,7 +268,7 @@ public class Client {
         return 1;        
     }
 
-    public static int tradeForAdmin(String userName) {			//start
+    public static int tradeForAdmin(AdminAPI admin, String userName) {			//start
         
         Scanner scan = new Scanner(System.in);
         
@@ -271,21 +276,21 @@ public class Client {
         
         do {
             String userInput = scan.nextLine();
-            if (userInput.equalsIgnoreCase("q")) {
+            if (userInput.equalsIgnoreCase("q")) {  //admin selection: quit
                 break;
             }
             
-            if (userInput.equalsIgnoreCase("u")) // to do. equals() inconsistent type fix for later debug
+            if (userInput.equalsIgnoreCase("u")) // admin selection: update
             {
 
                 try {
-                    Registry registry = LocateRegistry.getRegistry(host);
-                    AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI"); 
-                    
+                   
                     //user input need validation
                     System.out.println("please input ticker name: ");                   
                     String ticker_name = scan.nextLine();
-                    System.out.println("please input new price: ");       
+                    System.out.println("please input new price: ");  
+                    
+                    //validation on user input
                     double new_price = scan.nextInt();
                     
                     boolean errorCode = admin.update(ticker_name, new_price);
@@ -308,10 +313,8 @@ public class Client {
                     e.printStackTrace();
                 }
                 
-            } else if (userInput.equalsIgnoreCase("l")) {
+            } else if (userInput.equalsIgnoreCase("l")) {   //admin selection: list stock list
                 try {
-                    Registry registry = LocateRegistry.getRegistry(host);
-                    AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
                     admin.displayMarketStocks();
 
 
@@ -346,9 +349,11 @@ public class Client {
                 String userName = "";
                 int type = welcome(userName); // get user name, and return user type, 1 ordinary user, 2 admin
                 if (type == 1) {
-                    tradeForUser(userName);// something to do with user
+                     UserAPI user = (UserAPI) registry.lookup("UserAPI");
+                    tradeForUser(user, userName);// call user operations
                 } else if (type == 2) {
-                    tradeForAdmin(userName); // something to do with admin
+                    AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
+                    tradeForAdmin(admin, userName); // call admin operations
                 } else {
                     System.out.println("Never been here!");
                 }
