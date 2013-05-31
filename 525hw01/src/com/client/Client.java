@@ -43,15 +43,23 @@ public class Client {
             try {
                 if (userInput.startsWith("user", 0)) {
                     type = 1;
-                    userName = userInput.substring(5);
+                    userName = userInput.substring(5).trim().toLowerCase();
+                    if (userName.equals("")) {
+                        System.out.println("Please input your username. Username cannot be null.");
+                        return 0;
+                    }
                     break;
                 } else if (userInput.startsWith("admin", 0)) {
                     type = 2;
-                    userName = userInput.substring(5);
+                    userName = userInput.substring(5).trim().toLowerCase();
+                    if (userName.equals("")) {
+                        System.out.println("Please input your username. Username cannot be null.");
+                        return 0;
+                    }                    
                     break;
                 } else {
                     System.out.println("Invalid user type!");
-                    break;
+                    return 0;
                 }
 //                stub.returnUserType(type);
 
@@ -109,9 +117,12 @@ public class Client {
 
         do {
             try {
-                System.out.println("Your balance: " + user.getUserBalance());
+                System.out.println();
+                System.out.println("User name: " + userName + "\t\t\tYour balance: " + user.getUserBalance());
             } catch (RemoteException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
+                System.out.println("Cannot connect to server! Abort!");
+                break;
             }
             userPrompt();
 
@@ -126,7 +137,7 @@ public class Client {
                 try {
 
                     System.out.print("please input ticker name: ");
-                    String ticker_name = scan.nextLine();
+                    String ticker_name = scan.nextLine().trim().toUpperCase();
 
                     double price = user.getMarketPrice(ticker_name);
 
@@ -154,6 +165,7 @@ public class Client {
                     //output user operation result: fail, success
                     if (errorCode == 0) {
                         System.out.println("Sold successfully!");
+                        continue;
                     } else if (errorCode == 1) {
                         int shares = user.getNumShare(ticker_name);
 //                        if(shares == -1)
@@ -162,7 +174,7 @@ public class Client {
 //                        }
 //                        else
 //                        {
-                        System.out.println("the number of shares are not enough to sell!");
+                        System.out.println("You do not have enough shares to sell!");
                         System.out.println("Your have " + shares + " shares of " + ticker_name + ".");
                         continue;
 //                        }
@@ -246,10 +258,11 @@ public class Client {
                     e.printStackTrace();
                 }
 
-            } else {
-
-                System.out.println("Invalid input! Please select your operation:");
-            }
+            } 
+//            else {
+//
+//                System.out.println("Invalid input! Please select your operation:");
+//            }
 
 
         } while (true);
@@ -332,6 +345,10 @@ public class Client {
 //            {
             System.out.println("Server connected!");
             int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
+            while (type == 0) {
+                type = welcome();
+            }
+            
             if (type == 1) {
                 UserAPI user = (UserAPI) registry.lookup("UserAPI");
                 user.populateCurrentUser(userName);
@@ -339,7 +356,7 @@ public class Client {
             } else if (type == 2) {
                 AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
                 tradeForAdmin(admin); // call admin operations
-            } else {
+            } else  {
                 System.out.println("Never been here!");
             }
 //            }  

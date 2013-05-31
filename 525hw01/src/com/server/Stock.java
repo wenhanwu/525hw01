@@ -39,7 +39,7 @@ public class Stock {
     }
        
     public boolean isSameStock(String ticker) {
-        if (this.ticker_name.equals(ticker))
+        if (this.ticker_name.equalsIgnoreCase(ticker))
             return true; 
         else 
             return false;
