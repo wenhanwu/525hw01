@@ -34,17 +34,18 @@ public class Client {
         System.out.println("(Usage: [USER name] or [ADMIN name])");
         do {
             String userInput = scan.nextLine();
+            userInput = userInput.toLowerCase();
             if (userInput.equalsIgnoreCase("q")) {
                 break;
             }
 
             // get user type or add new user
             try {
-                if (userInput.startsWith("USER", 0)) {
+                if (userInput.startsWith("user", 0)) {
                     type = 1;
                     userName = userInput.substring(5);
                     break;
-                } else if (userInput.startsWith("ADMIN", 0)) {
+                } else if (userInput.startsWith("admin", 0)) {
                     type = 2;
                     userName = userInput.substring(5);
                     break;
