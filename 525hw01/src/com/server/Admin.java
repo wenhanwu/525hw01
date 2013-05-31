@@ -5,6 +5,7 @@
 package com.server;
 
 import com.api.AdminAPI;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -65,9 +66,12 @@ public class Admin implements AdminAPI {
         String returnStr = "";
         returnStr += "Stock Name-----Shares Hold-----Current Price\n";
         for (int i = 0; i < StockList.getStockPool().size(); i++) {
+            double price = (StockList.getStockPool().get(i)).getPrice();
+            BigDecimal changeDP = new BigDecimal(price);
+            double priceDisplay = changeDP.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             returnStr += ((StockList.getStockPool().get(i)).getTickerName() + "\t\t"
                     + (StockList.getStockPool().get(i)).getShare() + "\t\t"
-                    + (StockList.getStockPool().get(i)).getPrice() + "\n");
+                    + priceDisplay + "\n");
         }
         return returnStr;
     }
