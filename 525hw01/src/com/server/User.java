@@ -5,6 +5,7 @@
 package com.server;
 
 import com.api.UserAPI;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -211,7 +212,12 @@ public class User implements UserAPI {
         String returnStr = "";
         returnStr += "Stock Name-----Shares Hold-----Price of Last Trade\n";
         for (int i = 0; i < sEList.size(); i++) {
-            returnStr += ((sEList.get(i)).getTickerName() + "\t\t" + (sEList.get(i)).getShare() + "\t\t" + (sEList.get(i)).getPrice() + "\n");
+            double price = (sEList.get(i)).getPrice();
+            BigDecimal changeDP = new BigDecimal(price);
+            double priceDisplay = changeDP.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            returnStr += ((sEList.get(i)).getTickerName() + "\t\t" 
+                    + (sEList.get(i)).getShare() + "\t\t" 
+                    + priceDisplay + "\n");
         }
         return returnStr;
     }
