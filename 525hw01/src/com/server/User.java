@@ -233,6 +233,8 @@ public class User implements UserAPI {
         User tempUser = UserList.fetchByUserName(userName);
         this.userName = tempUser.getUserName();
         this.balance = tempUser.getBalance();
+        System.out.println(this.balance);
         this.sEList = tempUser.getStockListofUser();
+        System.out.println(this.getStockListofUser());
     }
 }
