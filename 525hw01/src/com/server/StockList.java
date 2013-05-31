@@ -43,8 +43,7 @@ public class StockList {
     /**
      * Default constructor.
      */
-    public StockList() {
-        //not used yet.
+    public StockList() {       
     }
 
     /**
@@ -146,6 +145,9 @@ public class StockList {
             String inputLine;
             if (!(inputLine = in.readLine()).equals("N/A")) {
                 stockPrice = Double.parseDouble(inputLine);
+            }
+            else {
+                return null;
             }
             in.close();
             return new Stock(ticker_name, stockPrice);

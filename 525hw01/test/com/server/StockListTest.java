@@ -64,6 +64,11 @@ public class StockListTest {
             result = StockList.getStockbyName(ticker_name);
         System.out.println(result);
         System.out.println(StockList.getStockPool());
+        System.out.println(StockList.update("AAAA", 10));
+        System.out.println(StockList.getStockPool());
+        StockList.update("BBRY", 1);
+        System.out.println(StockList.getStockPool());
+        
 //        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
