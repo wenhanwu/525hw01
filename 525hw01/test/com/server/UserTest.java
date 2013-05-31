@@ -115,7 +115,7 @@ public class UserTest {
         String ticker_name = "aaa";
         User instance = new User("aaa",1.0);
         int expResult = 0;
-        int result = instance.getAvailableShare(ticker_name);
+        int result = instance.getAvailableShares(ticker_name);
         //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

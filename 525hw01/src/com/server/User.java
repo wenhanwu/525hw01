@@ -5,6 +5,7 @@
 package com.server;
 
 import com.api.UserAPI;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -85,7 +86,7 @@ public class User implements UserAPI {
      * @return -1 Cannot find the stock in the market
      *
      */
-    public int getAvailableShare(String ticker_name) {
+    public int getAvailableShares(String ticker_name) {
         StockExchange stockEx = StockList.getStockbyName(ticker_name);
         if (stockEx==null) {
             return -1;
@@ -220,4 +221,10 @@ public class User implements UserAPI {
         System.out.println("test func in UserAPI");
         return "test!";
     }
+
+    @Override
+    public double getUserBalance() throws RemoteException {
+        return this.balance;
+    }
+
 }
