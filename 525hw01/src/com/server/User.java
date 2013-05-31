@@ -153,7 +153,7 @@ public class User implements UserAPI {
     public int buy(String ticker_name, int num_stocks) {
         if (StockList.getStockbyName(ticker_name)!=(null)) {
             if (StockList.getStockbyName(ticker_name).getShare() >= num_stocks) {
-                if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks > getBalance()) {
+                if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks < getBalance()) {
                     //Update the share in user's list
                     fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() + num_stocks);
                     //Update the price in user's list
