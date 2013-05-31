@@ -13,6 +13,8 @@ import java.util.Scanner;
 import java.lang.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -94,7 +96,6 @@ public class Client {
         System.out.println("|Commmands:	s - Sell stocks         b - Buy stocks       |");
         System.out.println("|		l - Get My Stock List   q - Quit             |");
         System.out.println("----------------------------------------------------------");
-
     }
 
     static void adminPrompt() {
@@ -114,6 +115,11 @@ public class Client {
         
         do {       
             userPrompt();
+            try {
+                System.out.println("Your balance: " + user.getUserBalance());
+            } catch (RemoteException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
