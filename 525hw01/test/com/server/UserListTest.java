@@ -49,6 +49,6 @@ public class UserListTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
         UserList.loadUserData();
-        UserList.saveUserData();
+        System.out.println(UserList.fetchByUserName("kate").displayStocksHold());
     }
 }
