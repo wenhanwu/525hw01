@@ -39,12 +39,17 @@ public class UserList {
      * @return null Cannot find the User in the User List
      */
     public static User fetchByUserName(String userName) {
+        loadUserData();
+        System.out.println(userName);
+        System.out.println(uList.get(0).getStockListofUser());
         for (int i = 0; i < uList.size(); i++) {
-            if ((uList.get(i)).getUserName().equals(userName)) {
+            if (uList.get(i).getUserName().equals(userName)) {
+                System.out.println("here");
                 return uList.get(i);
             }
         }
         uList.add(new User(userName));
+        System.out.println(uList.size());
         return uList.get(uList.size()-1);
     }
 

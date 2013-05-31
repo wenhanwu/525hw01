@@ -41,7 +41,7 @@ public class Server implements ServerAPI{
             registry.bind("UserAPI", userStub);
             registry.bind("AdminAPI", adminStub);
             
-            UserList.loadUserData();
+//            UserList.loadUserData();
             StockList.loadStockPoolFromDisk(); //true or false
             
             System.err.println("UserAPI Server ready");

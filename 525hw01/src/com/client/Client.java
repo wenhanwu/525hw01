@@ -20,7 +20,9 @@ import java.rmi.registry.Registry;
  */
 public class Client {
 
-    public static int welcome(String userName) {			//start
+    private static String userName = ""; 
+    
+    public static int welcome() {			//start
 
         int type = 0; // return user type, 0 means user name not exist, 1 means ordinary user, 2 means admin
 
@@ -39,11 +41,13 @@ public class Client {
                 if(userInput.startsWith("USER", 0))
                 {
                     type = 1;
+                    userName = userInput.substring(5);
                     break;
                 }
                 else if(userInput.startsWith("ADMIN", 0))
                 {
                     type = 2;
+                    userName = userInput.substring(5);
                     break;
                 }
                 else
@@ -103,13 +107,14 @@ public class Client {
 
     }
 
-    public static int tradeForUser(UserAPI user, String userName) {			//start
+    public static int tradeForUser(UserAPI user) {			//start
 
         Scanner scan = new Scanner(System.in);
         
-        userPrompt();
         
-        do {
+        do {       
+            userPrompt();
+
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
                 break;
@@ -122,17 +127,24 @@ public class Client {
                     
                     System.out.println("please input ticker name: ");                   
                     String ticker_name = scan.nextLine();
-                    
+
                     double price = user.getMarketPrice(ticker_name);
                     
                     //validation on price information
-                    if(price == -1)
+                    if(price == -1.0)
                     {
-                       System.out.println("Can not get price information!");  
+                       System.out.println("This ticker_name does not exist!"); 
+                       continue;
                     }
                     else
                     {
-                        System.out.println("the current price of " + ticker_name + " is " + price + "."); 
+                        int shares = user.getNumShare(ticker_name);
+                        if (shares <= 0) {
+                            System.out.println("You do not have shares of " + ticker_name);
+                            continue;
+                        }
+                        System.out.println("You have " + shares + " shares of " + ticker_name + ", current price is " + price + ".");
+
                     }
                     
                     System.out.println("please input number of shares to sell: ");     
@@ -145,20 +157,21 @@ public class Client {
                     //output user operation result: fail, success
                     if(errorCode == 0)
                     {
-                        System.out.println("Ticker name does not exist!");
+                        System.out.println("Sold successfully!");
                     }
                     else if(errorCode == 1)
                     {
                         int shares = user.getNumShare(ticker_name);
-                        if(shares == -1)
-                        {
-                            System.out.println("Can not get information of shares!");
-                        }
-                        else
-                        {
+//                        if(shares == -1)
+//                        {
+//                            System.out.println("Can not get information of shares!");
+//                        }
+//                        else
+//                        {
                             System.out.println("the number of shares are not enough to sell!");
                             System.out.println("Your have " + shares + " shares of " + ticker_name + ".");
-                        }
+                            continue;
+//                        }
                         
                     }
 //                    else if(errorCode == 2)
@@ -167,10 +180,10 @@ public class Client {
 //                        System.out.println("There is no enough balance!");
 //                        System.out.println("Your current balance is " + balance);
 //                    }
-                    else
-                    {
-                        System.out.println("Never been here!");
-                    }
+//                    else
+//                    {
+//                        System.out.println("Never been here!");
+//                    }
 
 
                 } catch (Exception e) {
@@ -270,7 +283,7 @@ public class Client {
         return 1;        
     }
 
-    public static int tradeForAdmin(AdminAPI admin, String userName) {			//start
+    public static int tradeForAdmin(AdminAPI admin) {			//start
         
         Scanner scan = new Scanner(System.in);
         
@@ -348,15 +361,14 @@ public class Client {
 //            if (stub.isConnect()) // query ServerAPI for connection
 //            {
                 System.out.println("Server connected!");
-                String userName = "";
-                int type = welcome(userName); // get user name, and return user type, 1 ordinary user, 2 admin
+                int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
                 if (type == 1) {
                      UserAPI user = (UserAPI) registry.lookup("UserAPI");
                      user.populateCurrentUser(userName);
-                    tradeForUser(user, userName);// call user operations
+                    tradeForUser(user);// call user operations
                 } else if (type == 2) {
                     AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
-                    tradeForAdmin(admin, userName); // call admin operations
+                    tradeForAdmin(admin); // call admin operations
                 } else {
                     System.out.println("Never been here!");
                 }

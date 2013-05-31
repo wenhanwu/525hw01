@@ -8,7 +8,7 @@ and open the template in the editor.
 <userList>
     <user>
         <userName>tom</userName>
-        <balance>1000</balance>
+        <balance>800</balance>
         <stockList>
             <stockExchange>
                 <ticker_name>GOOG</ticker_name>
@@ -24,7 +24,7 @@ and open the template in the editor.
     </user>
     <user>
         <userName>jason</userName>
-        <balance>1000</balance>
+        <balance>000</balance>
         <stockList>
             <stockExchange>
                 <ticker_name>MSFT</ticker_name>
@@ -40,7 +40,7 @@ and open the template in the editor.
     </user>
     <user>
         <userName>kate</userName>
-        <balance>1000</balance>
+        <balance>100</balance>
         <stockList>
             <stockExchange>
                 <ticker_name>GOOG</ticker_name>
