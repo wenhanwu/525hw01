@@ -36,18 +36,20 @@ public class Client {
 
             // get user type or add new user
             try {
-                if(userInput.startsWith("USER", 4))
+                if(userInput.startsWith("USER", 0))
                 {
                     type = 1;
+                    break;
                 }
-                else if(userInput.startsWith("ADMIN", 5))
+                else if(userInput.startsWith("ADMIN", 0))
                 {
                     type = 2;
+                    break;
                 }
                 else
                 {
                     System.out.println("Invalid user type!");
-                    
+                    break;
                 }
 //                stub.returnUserType(type);
                 
@@ -315,7 +317,7 @@ public class Client {
                 
             } else if (userInput.equalsIgnoreCase("l")) {   //admin selection: list stock list
                 try {
-                    admin.displayMarketStocks();
+                    System.out.println(admin.displayMarketStocks());
 
 
                 } catch (Exception e) {
@@ -342,14 +344,15 @@ public class Client {
         
         try {
             Registry registry = LocateRegistry.getRegistry(host);
-            ServerAPI stub = (ServerAPI) registry.lookup("ServerAPI");
-            if (stub.isConnect()) // query ServerAPI for connection
-            {
+//            ServerAPI stub = (ServerAPI) registry.lookup("ServerAPI");
+//            if (stub.isConnect()) // query ServerAPI for connection
+//            {
                 System.out.println("Server connected!");
                 String userName = "";
                 int type = welcome(userName); // get user name, and return user type, 1 ordinary user, 2 admin
                 if (type == 1) {
                      UserAPI user = (UserAPI) registry.lookup("UserAPI");
+                     user.populateCurrentUser(userName);
                     tradeForUser(user, userName);// call user operations
                 } else if (type == 2) {
                     AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
@@ -357,7 +360,7 @@ public class Client {
                 } else {
                     System.out.println("Never been here!");
                 }
-            }  
+//            }  
         }
         catch (Exception e) 
         {

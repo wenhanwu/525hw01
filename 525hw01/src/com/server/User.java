@@ -13,16 +13,18 @@ import java.util.ArrayList;
  * @author w
  */
 public class User implements UserAPI {
-
+    private final double INITIAL_BALANCE = 1000;
     private String userName;
     private double balance;
     private ArrayList<StockExchange> sEList = new ArrayList();
 
-    public User(String userName, double balance) {
-        this.userName = userName;
-        this.balance = balance;
+    public User() {
     }
 
+    public User(String userName) {
+        this.userName = userName;
+        this.balance = this.INITIAL_BALANCE; 
+    }
     
     /**
      *
@@ -227,4 +229,10 @@ public class User implements UserAPI {
         return this.balance;
     }
 
+    public void populateCurrentUser(String userName) throws RemoteException {
+        User tempUser = UserList.fetchByUserName(userName);
+        this.userName = tempUser.getUserName();
+        this.balance = tempUser.getBalance();
+        this.sEList = tempUser.getStockListofUser();
+    }
 }

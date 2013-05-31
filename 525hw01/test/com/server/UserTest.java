@@ -113,7 +113,7 @@ public class UserTest {
     public void testGetAvailableShare() {
         System.out.println("getAvailableShare");
         String ticker_name = "aaa";
-        User instance = new User("aaa",1.0);
+        User instance = new User("aaa");
         int expResult = 0;
         int result = instance.getAvailableShares(ticker_name);
         //assertEquals(expResult, result);

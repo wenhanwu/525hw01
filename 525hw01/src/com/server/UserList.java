@@ -44,7 +44,8 @@ public class UserList {
                 return uList.get(i);
             }
         }
-        return null;
+        uList.add(new User(userName));
+        return uList.get(uList.size()-1);
     }
 
     /**

@@ -35,5 +35,5 @@ public interface UserAPI extends Remote {
     
     public String displayStocksHold() throws RemoteException;
 
-    public String test() throws RemoteException;
+    public void populateCurrentUser(String user_name) throws RemoteException;
 }

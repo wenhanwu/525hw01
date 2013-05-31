@@ -15,6 +15,10 @@ public class Admin implements AdminAPI {
 
     private String adminName;
 
+    public Admin(String adminName) {
+        this.adminName = adminName;
+    }
+
     /**
      * @return the adminName
      */
