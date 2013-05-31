@@ -85,21 +85,19 @@ public class Client {
     }
 
     static void userPrompt() {
-
-        System.out.println("Please select your operation: ");
-        System.out.println("----------------------------------------------------------");
-        System.out.println("|Commmands:	s - Sell stocks         b - Buy stocks       |");
-        System.out.println("|		l - Get My Stock List   q - Quit             |");
-        System.out.println("----------------------------------------------------------");
+        System.out.println("---------------------------------------------------------");
+        System.out.println("|Commmands:	s - Sell stocks         b - Buy stocks\t|");
+        System.out.println("|		l - Get My Stock List   q - Quit\t|");
+        System.out.println("---------------------------------------------------------");
+        System.out.print("Please select your operation: ");
     }
 
     static void adminPrompt() {
-
-        System.out.println("Please select your operation: ");
-        System.out.println("----------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
         System.out.println("|commands:	l - Get Stock List    u - Update Stock Price |");
         System.out.println("|		q - Quit                                     |");
-        System.out.println("----------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
+        System.out.print("Please select your operation: ");
 
     }
 
@@ -109,12 +107,12 @@ public class Client {
 
 
         do {
-            userPrompt();
             try {
                 System.out.println("Your balance: " + user.getUserBalance());
             } catch (RemoteException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
+            userPrompt();
 
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
@@ -126,7 +124,7 @@ public class Client {
 
                 try {
 
-                    System.out.println("please input ticker name: ");
+                    System.out.print("please input ticker name: ");
                     String ticker_name = scan.nextLine();
 
                     double price = user.getMarketPrice(ticker_name);
@@ -138,14 +136,14 @@ public class Client {
                     } else {
                         int shares = user.getNumShare(ticker_name);
                         if (shares <= 0) {
-                            System.out.println("You do not have shares of " + ticker_name);
+                            System.out.println("You do not have shares of " + ticker_name + ".");
                             continue;
                         }
                         System.out.println("You have " + shares + " shares of " + ticker_name + ", current price is " + price + ".");
 
                     }
 
-                    System.out.println("please input number of shares to sell: ");
+                    System.out.print("please input number of shares to sell: ");
 
                     //validation
                     int num_stock = scan.nextInt();
@@ -188,11 +186,10 @@ public class Client {
 
             } else if (userInput.equalsIgnoreCase("b")) {   //user selection: buy
                 try {
-                    System.out.println("please input ticker name: ");
+                    System.out.print("please input ticker name: ");
                     String ticker_name = scan.nextLine();
 
                     double price = user.getMarketPrice(ticker_name);
-
                     //validation
                     if (price == -1) {
                         System.out.println("Can not get price information!");
@@ -200,7 +197,7 @@ public class Client {
                         System.out.println("the current price of " + ticker_name + " is " + price + ".");
                     }
 
-                    System.out.println("please input number of shares to buy: ");
+                    System.out.print("please input number of shares to buy: ");
 
                     //validation on user input
                     int num_stock = scan.nextInt();
@@ -264,9 +261,9 @@ public class Client {
 
         Scanner scan = new Scanner(System.in);
 
-        adminPrompt();
 
         do {
+            adminPrompt();
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {  //admin selection: quit
                 break;
@@ -278,9 +275,9 @@ public class Client {
                 try {
 
                     //user input need validation
-                    System.out.println("please input ticker name: ");
+                    System.out.print("please input ticker name: ");
                     String ticker_name = scan.nextLine();
-                    System.out.println("please input new price: ");
+                    System.out.print("please input new price: ");
 
                     //validation on user input
                     double new_price = scan.nextInt();

@@ -42,13 +42,14 @@ public class Server implements ServerAPI{
             registry.bind("AdminAPI", adminStub);
             
 //            UserList.loadUserData();
-            StockList.loadStockPoolFromDisk(); //true or false
+            if (StockList.getStockPool().isEmpty())
+                StockList.loadStockPoolFromDisk(); //true or false
             
             System.err.println("UserAPI Server ready");
 
             while (true) {
                 StockList.updateWholeStockList();
-                Thread.sleep(1000);
+                Thread.sleep(2000);
                 System.out.println(StockList.getStockPool());
 //                System.out.println(adminObj.displayMarketStocks());
             }

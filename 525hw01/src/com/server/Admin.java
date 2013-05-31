@@ -63,10 +63,10 @@ public class Admin implements AdminAPI {
     @Override
     public String displayMarketStocks() {
         String returnStr = "";
-        returnStr += "Stock Name-----Shares Hold-----Price of Last Trade\n";
+        returnStr += "Stock Name-----Shares Hold-----Current Price\n";
         for (int i = 0; i < StockList.getStockPool().size(); i++) {
-            returnStr += ((StockList.getStockPool().get(i)).getTickerName() + "  "
-                    + (StockList.getStockPool().get(i)).getShare() + "   "
+            returnStr += ((StockList.getStockPool().get(i)).getTickerName() + "\t\t"
+                    + (StockList.getStockPool().get(i)).getShare() + "\t\t"
                     + (StockList.getStockPool().get(i)).getPrice() + "\n");
         }
         return returnStr;

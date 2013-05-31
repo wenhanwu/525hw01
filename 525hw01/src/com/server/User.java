@@ -211,19 +211,9 @@ public class User implements UserAPI {
         String returnStr = "";
         returnStr += "Stock Name-----Shares Hold-----Price of Last Trade\n";
         for (int i = 0; i < sEList.size(); i++) {
-            returnStr += ((sEList.get(i)).getTickerName() + "  " + (sEList.get(i)).getShare() + "   " + (sEList.get(i)).getPrice() + "\n");
+            returnStr += ((sEList.get(i)).getTickerName() + "\t\t" + (sEList.get(i)).getShare() + "\t\t" + (sEList.get(i)).getPrice() + "\n");
         }
         return returnStr;
-    }
-
-    /**
-     * Just for test...
-     *
-     * @return
-     */
-    public String test() {
-        System.out.println("test func in UserAPI");
-        return "test!";
     }
 
     @Override
@@ -235,8 +225,6 @@ public class User implements UserAPI {
         User tempUser = UserList.fetchByUserName(userName);
         this.userName = tempUser.getUserName();
         this.balance = tempUser.getBalance();
-        System.out.println(this.balance);
         this.sEList = tempUser.getStockListofUser();
-        System.out.println(this.getStockListofUser());
     }
 }
