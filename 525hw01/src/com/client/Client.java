@@ -132,6 +132,7 @@ public class Client {
                 try {
                     //user selection: quit
                     user.saveUserListToDisk();
+                    user.freeCurrentUser();
                 } catch (RemoteException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -166,20 +167,16 @@ public class Client {
 
                     //validation
                     int num_stock = 0;
-                    if (scan.hasNextInt())
-                    {
-                    	num_stock = scan.nextInt();
+                    if (scan.hasNextInt()) {
+                        num_stock = scan.nextInt();
                         scan.nextLine();
-                    	if (num_stock <= 0)
-                    	{
-                    		System.out.println(num_stock + " must be positive integer!");
-                        	continue;
-                    	}	
-                    }
-                    else
-                    {
-                    	System.out.println(scan.nextLine() + " is an invalid input!");
-                    	continue;
+                        if (num_stock <= 0) {
+                            System.out.println(num_stock + " must be positive integer!");
+                            continue;
+                        }
+                    } else {
+                        System.out.println(scan.nextLine() + " is an invalid input!");
+                        continue;
                     }
 
                     int errorCode = user.sell(ticker_name, num_stock);
@@ -237,20 +234,16 @@ public class Client {
 
                     //validation on user input
                     int num_stock = 0;
-                    if (scan.hasNextInt())
-                    {
-                    	num_stock = scan.nextInt();
+                    if (scan.hasNextInt()) {
+                        num_stock = scan.nextInt();
                         scan.nextLine();
-                    	if (num_stock <= 0)
-                    	{
-                    		System.out.println(num_stock + " must be positive integer!");
-                        	continue;
-                    	}	
-                    }
-                    else
-                    {
-                    	System.out.println(scan.nextLine() + " is an invalid input!");
-                    	continue;
+                        if (num_stock <= 0) {
+                            System.out.println(num_stock + " must be positive integer!");
+                            continue;
+                        }
+                    } else {
+                        System.out.println(scan.nextLine() + " is an invalid input!");
+                        continue;
                     }
 
                     int errorCode = user.buy(ticker_name, num_stock); // potential bug! it will go to never been here
@@ -296,7 +289,7 @@ public class Client {
                     e.printStackTrace();
                 }
 
-            }  else if (userInput.equalsIgnoreCase("c")) {
+            } else if (userInput.equalsIgnoreCase("c")) {
 
                 try {
                     System.out.print("please input ticker name: ");
@@ -313,13 +306,11 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-            }
-            else {
-
+            } else {
 //                System.out.println("Invalid input!");
             }
-    
-            
+
+
 //            else {
 //
 //                System.out.println("Invalid input! Please select your operation:");
@@ -355,22 +346,18 @@ public class Client {
 
                     //validation on user input
                     double new_price = 0;
-                    if (scan.hasNextDouble())
-                    {
-                    	new_price = scan.nextDouble();
+                    if (scan.hasNextDouble()) {
+                        new_price = scan.nextDouble();
                         scan.nextLine();
-                    	if (new_price <= 0)
-                    	{
-                    		System.out.println(new_price + " must be positive!");
-                        	continue;
-                    	}	
+                        if (new_price <= 0) {
+                            System.out.println(new_price + " must be positive!");
+                            continue;
+                        }
+                    } else {
+                        System.out.println(scan.nextLine() + " is an invalid input!");
+                        continue;
                     }
-                    else
-                    {
-                    	System.out.println(scan.nextLine() + " is an invalid input!");
-                    	continue;
-                    }
-                    
+
                     boolean errorCode = admin.update(ticker_name, new_price);
                     if (errorCode == true) {
                         System.out.println("Ticker is successfully updated");
@@ -397,7 +384,6 @@ public class Client {
                 }
 
             } else {
-
 //                System.out.println("Invalid input! Please select your operation:");
             }
 
@@ -423,18 +409,32 @@ public class Client {
             }
 
             if (type == 1) {
+
+
+                UserAPI userCheck = null;
+                for (int i = 0; i < MAXUSERNUM; i++) {
+                    userCheck = (UserAPI) registry.lookup("UserAPI" + i);
+                    if (userCheck.getUserName() != null) {
+                        if (userCheck.getUserName().equals(userName)) {
+                            System.out.println("You are already activated, please change a user!");
+                            System.exit(0);
+                        }
+                    }
+                }
+
+
                 boolean findFlag = false;
                 UserAPI user = null;
-                int i=0;
-                while (!findFlag&&i<MAXUSERNUM) {
-                    user = (UserAPI) registry.lookup("UserAPI"+i);
+                int i = 0;
+                while (!findFlag && i < MAXUSERNUM) {
+                    user = (UserAPI) registry.lookup("UserAPI" + i);
                     if (user.getUserName() == null) {
-                        findFlag=true;
+                        findFlag = true;
                         break;
                     }
                     i++;
                 }
-                if(!findFlag){
+                if (!findFlag) {
 
                     System.out.println("No room for you!");
 
@@ -442,22 +442,22 @@ public class Client {
 
                     System.exit(0);
                 }
-                    
+
                 user.populateCurrentUser(userName);
                 tradeForUser(user);// call user operations
             } else if (type == 2) {
-                 boolean findFlag = false;
+                boolean findFlag = false;
                 AdminAPI admin = null;
-                int i=0;
-                 while (!findFlag&&i<MAXUSERNUM) {
-                    admin = (AdminAPI) registry.lookup("AdminAPI"+i);
+                int i = 0;
+                while (!findFlag && i < MAXUSERNUM) {
+                    admin = (AdminAPI) registry.lookup("AdminAPI" + i);
                     if (admin.getAdminName() == null) {
-                        findFlag=true;
+                        findFlag = true;
                         break;
                     }
                     i++;
                 }
-                if(!findFlag){
+                if (!findFlag) {
 
                     System.out.println("No room for you!");
 

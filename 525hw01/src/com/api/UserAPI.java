@@ -38,4 +38,5 @@ public interface UserAPI extends Remote {
     public void saveUserListToDisk() throws RemoteException;
 
     public String getUserName() throws RemoteException;
+    public void freeCurrentUser() throws RemoteException;
 }

@@ -21,7 +21,7 @@ public class User implements UserAPI {
     private ArrayList<StockExchange> sEList;
 
     public User() {
-//        this.userName = "";
+         this.userName = null;
     }
 
     public User(String userName) {
@@ -161,8 +161,9 @@ public class User implements UserAPI {
             if (StockList.getStockbyName(ticker_name).getShare() >= num_stocks) {
                 if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks < getBalance()) {
                     //Update the share in user's list
-                    if(fetchStock(ticker_name)==null)
-                        sEList.add(new StockExchange(0,ticker_name,  0));
+                    if (fetchStock(ticker_name) == null) {
+                        sEList.add(new StockExchange(0, ticker_name, 0));
+                    }
                     fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() + num_stocks);
                     //Update the price in user's list
                     fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
@@ -237,12 +238,18 @@ public class User implements UserAPI {
 
     public void populateCurrentUser(String userName) throws RemoteException {
         User tempUser = UserList.fetchByUserName(userName);
-            this.userName = tempUser.getUserName();
-            this.balance = tempUser.getBalance();
-            this.sEList = tempUser.getStockListofUser();
+        this.userName = tempUser.getUserName();
+        this.balance = tempUser.getBalance();
+        this.sEList = tempUser.getStockListofUser();
     }
-    
+
     public void saveUserListToDisk() throws RemoteException {
         UserList.saveUserData();
+    }
+
+    public void freeCurrentUser() throws RemoteException {
+        this.userName = null;
+        this.balance = 0;
+        this.sEList = null;
     }
 }
