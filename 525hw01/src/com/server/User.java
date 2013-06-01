@@ -41,7 +41,7 @@ public class User implements UserAPI {
     }
 
     /**
-     *
+     * Constructor.
      * @param userName
      * @param balance
      * @param sEList
@@ -50,6 +50,16 @@ public class User implements UserAPI {
         this.userName = userName;
         this.balance = balance;
         this.sEList = sEList;
+    }
+
+    /**
+     * Copy constructor.
+     * @param user 
+     */
+    public User(User user) {
+        this.userName = user.getUserName();
+        this.balance = user.getBalance();
+        this.sEList = user.getStockListofUser();
     }
 
     /**
@@ -169,7 +179,7 @@ public class User implements UserAPI {
     public int buy(String ticker_name, int num_stocks) {
         if (StockList.getStockbyName(ticker_name) != (null)) {
             if (StockList.getStockbyName(ticker_name).getShare() >= num_stocks) {
-                if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks < getBalance()) {
+                if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks <= getBalance()) {
                     //Update the share in user's list
                     if (fetchStock(ticker_name) == null) {
                         sEList.add(new StockExchange(0, ticker_name, 0));
@@ -270,6 +280,9 @@ public class User implements UserAPI {
      * @throws RemoteException
      */
     public void saveUserListToDisk() throws RemoteException {
+        ArrayList<User> tempList = new ArrayList<User>();
+        tempList.add(new User(this));
+        UserList.syncUserList(tempList);
         UserList.saveUserData();
     }
 

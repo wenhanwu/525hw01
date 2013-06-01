@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class AdminList {
 
-    private static ArrayList<Admin> adminList = new ArrayList();
+    private static ArrayList<Admin> adminList = new ArrayList<Admin>();
 
     /**
      * Get the admin Obj by the admin name

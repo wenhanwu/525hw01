@@ -1,0 +1,1 @@
+start java -classpath ./bin com.client.Client

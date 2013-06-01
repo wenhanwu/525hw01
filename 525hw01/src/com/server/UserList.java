@@ -83,7 +83,7 @@ public class UserList {
                         String balance = "";
                         for (Node node = userUnit.getFirstChild(); node != null; node = node.getNextSibling()) {
                             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                                ArrayList<StockExchange> sEList = new ArrayList();
+                                ArrayList<StockExchange> sEList = new ArrayList<StockExchange>();
                                 if (node.getNodeName().equals("userName")) {
                                     userName = node.getFirstChild().getNodeValue();
                                     checker++;

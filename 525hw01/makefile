@@ -1,0 +1,2 @@
+default:
+	javac -d ./bin ./src/com/server/*.java ./src/com/api/*.java ./src/com/client/*.java -sourcepath ./src/com/data/

@@ -24,7 +24,7 @@ public class Client {
      */
     public static int welcome() {       //start
 
-        int type = 0; // return user type, 1 means ordinary user, 2 means admin
+        int type = 0; // return user type, 1 means ordinary user, 2 means admin, -1 means quit
 
         Scanner scan = new Scanner(System.in);
 
@@ -34,7 +34,7 @@ public class Client {
             String userInput = scan.nextLine();
             userInput = userInput.toLowerCase();
             if (userInput.equalsIgnoreCase("q")) {  //user selection: quit 
-                break;
+                return -1;
             }
 
             // get user type or add new user
@@ -235,7 +235,7 @@ public class Client {
                             System.out.println("Can not find user balance information!");
                         } else {
                             System.out.println("There is no enough balance!");
-                            System.out.println("Your current balance is " + balance);
+                            System.out.format("Your current balance is %.2f\n", balance);
                         }
                     } else {
                         System.out.println("Never been here!");
@@ -350,6 +350,9 @@ public class Client {
             Registry registry = LocateRegistry.getRegistry(host);
             System.out.println("Server connected!");
             int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
+            if (type == -1) {
+                return;
+            }
             while (type == 0) {
                 type = welcome();
             }

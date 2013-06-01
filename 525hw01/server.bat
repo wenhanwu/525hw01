@@ -1,0 +1,1 @@
+start java -classpath ./bin -Djava.rmi.server.codebase=file:./bin/ com.server.Server

@@ -161,6 +161,8 @@ public class StockList {
      * @return true or false
      */
     public static boolean saveStockPoolToDisk() {
+        if (stockPool.isEmpty())
+            return true;
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
