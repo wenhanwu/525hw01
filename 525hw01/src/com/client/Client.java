@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * entrance of the client side
  * @author jingboyu
  */
 public class Client {
@@ -24,9 +24,13 @@ public class Client {
     private static String userName = "";
     private static final int MAXUSERNUM = 5;
 
-    public static int welcome() {			//start
+    /**
+     * helper function: specify user type
+     * @return 
+     */
+    public static int welcome() {       //start
 
-        int type = 0; // return user type, 0 means user name not exist, 1 means ordinary user, 2 means admin
+        int type = 0; // return user type, 1 means ordinary user, 2 means admin
 
         Scanner scan = new Scanner(System.in);
 
@@ -35,15 +39,16 @@ public class Client {
         do {
             String userInput = scan.nextLine();
             userInput = userInput.toLowerCase();
-            if (userInput.equalsIgnoreCase("q")) {
+            if (userInput.equalsIgnoreCase("q")) {  //user selection: quit 
                 break;
             }
 
             // get user type or add new user
             try {
+                //handles user input
                 if (userInput.startsWith("user ", 0)) {
                     type = 1;
-                    userName = userInput.substring(5).trim().toLowerCase();
+                    userName = userInput.substring(5).trim().toLowerCase(); 
                     if (userName.equals("")) {
                         System.out.println("Please input your username. Username cannot be null.");
                         return 0;
@@ -68,31 +73,15 @@ public class Client {
                 e.printStackTrace();
             }
 
-
-//                if (stub.isValidUser(userInput)) {
-//                    userName = userInput;
-//                    if (stub.isAdmin(userInput)) {
-//                        type = 2;
-//                    } else {
-//                        type = 1;
-//                    }
-//                    break;
-//                } else {
-//                    type = stub.addNewUser(userInput);
-//                }
-//            } catch (Exception e) {
-//                System.err.println("Client exception: " + e.toString());
-//                e.printStackTrace();
-//            }
-//
-//
-//
         } while (true);
 //
 
         return type;
     }
 
+    /**
+     * helper function
+     */
     static void userPrompt() {
         System.out.println("---------------------------------------------------------");
         System.out.println("|Commmands:	s - Sell stock           b - Buy stock\t|");
@@ -102,6 +91,9 @@ public class Client {
         System.out.print("Please select your operation: ");
     }
 
+    /**
+     * helper function
+     */
     static void adminPrompt() {
         System.out.println("--------------------------------------------------------------");
         System.out.println("|commands:	l - Get Stock List    u - Update Stock Price |");
@@ -111,6 +103,11 @@ public class Client {
 
     }
 
+    /**
+     * user operations on client side: buy, sell, list, check and quit
+     * @param user user object
+     * @return 1
+     */
     public static int tradeForUser(UserAPI user) {			//start
 
         Scanner scan = new Scanner(System.in);
@@ -128,7 +125,7 @@ public class Client {
             userPrompt();
 
             String userInput = scan.nextLine();
-            if (userInput.equalsIgnoreCase("q")) {
+            if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
                 try {
                     //user selection: quit
                     user.saveUserListToDisk();
@@ -187,29 +184,12 @@ public class Client {
                         continue;
                     } else if (errorCode == 1) {
                         int shares = user.getNumShare(ticker_name);
-//                        if(shares == -1)
-//                        {
-//                            System.out.println("Can not get information of shares!");
-//                        }
-//                        else
-//                        {
+
                         System.out.println("You do not have enough shares to sell!");
                         System.out.println("Your have " + shares + " shares of " + ticker_name + ".");
                         continue;
-//                        }
 
                     }
-//                    else if(errorCode == 2)
-//                    {
-//                        double balance = getUserBalance();
-//                        System.out.println("There is no enough balance!");
-//                        System.out.println("Your current balance is " + balance);
-//                    }
-//                    else
-//                    {
-//                        System.out.println("Never been here!");
-//                    }
-
 
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
@@ -222,6 +202,7 @@ public class Client {
                     String ticker_name = scan.nextLine().trim().toUpperCase();
 
                     double price = user.getMarketPrice(ticker_name);
+                    
                     //validation
                     if (price == -1) {
                         System.out.println("This ticker_name does not exist!");
@@ -246,12 +227,12 @@ public class Client {
                         continue;
                     }
 
-                    int errorCode = user.buy(ticker_name, num_stock); // potential bug! it will go to never been here
+                    int errorCode = user.buy(ticker_name, num_stock); 
 
                     //output user operation result
                     if (errorCode == 0) {
                         System.out.println("Transaction done!");
-                    } else if (errorCode == 0) { // to do something wrong???
+                    } else if (errorCode == 0) {
                         System.out.println("Ticker name does not exist!");
                     } else if (errorCode == 1) {
                         int shares = user.getAvailableShares(ticker_name);
@@ -289,7 +270,7 @@ public class Client {
                     e.printStackTrace();
                 }
 
-            } else if (userInput.equalsIgnoreCase("c")) {
+            } else if (userInput.equalsIgnoreCase("c")) {   //user selection: check
 
                 try {
                     System.out.print("please input ticker name: ");
@@ -310,11 +291,6 @@ public class Client {
 //                System.out.println("Invalid input!");
             }
 
-
-//            else {
-//
-//                System.out.println("Invalid input! Please select your operation:");
-//            }
 
         } while (true);
 
@@ -401,7 +377,7 @@ public class Client {
 
         try {
             Registry registry = LocateRegistry.getRegistry(host);
-//            {
+
             System.out.println("Server connected!");
             int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
             while (type == 0) {
@@ -470,24 +446,11 @@ public class Client {
             } else {
                 System.out.println("Never been here!");
             }
-//            }  
+ 
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }
 
-
-//        try {
-//            Registry registry = LocateRegistry.getRegistry(host);
-//            UserAPI user = (UserAPI) registry.lookup("UserAPI");
-//            // sell buy and list stocks
-//            
-//            System.out.println(user.test());
-//        }
-//        catch (Exception e) 
-//        {
-//            System.err.println("Client exception: " + e.toString());
-//            e.printStackTrace();
-//        }
     }
 }
