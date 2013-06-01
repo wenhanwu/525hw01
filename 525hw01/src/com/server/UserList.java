@@ -29,14 +29,17 @@ import org.xml.sax.SAXException;
  * @author wenhanwu
  */
 public class UserList {
-
+    //The static Array list to maintain the user data
     private static ArrayList<User> uList = new ArrayList<User>();
 
+    /**
+     * To return the Array list Obj
+     * @return 
+     */
     public static ArrayList<User> getUserList() {
         return uList;
     }
 
-    
     /**
      *
      * @param userName
@@ -44,21 +47,18 @@ public class UserList {
      * @return null Cannot find the User in the User List
      */
     public static User fetchByUserName(String userName) {
-        if (uList.isEmpty())
-           loadUserData();
+        if (uList.isEmpty()) {
+            loadUserData();
+        }
         if (!uList.isEmpty()) {
-    //        System.out.println(userName);
-    //        System.out.println(uList.get(0).getStockListofUser());
             for (int i = 0; i < uList.size(); i++) {
                 if (uList.get(i).getUserName().equals(userName)) {
-    //                System.out.println("here");
                     return uList.get(i);
                 }
             }
         }
         uList.add(new User(userName));
-//        System.out.println(uList.size());
-        return uList.get(uList.size()-1);
+        return uList.get(uList.size() - 1);
     }
 
     /**
@@ -69,7 +69,6 @@ public class UserList {
     public static boolean loadUserData() {
         DocumentBuilderFactory domfac = DocumentBuilderFactory.newInstance();
         try {
-//            uList.clear();
             DocumentBuilder dombuilder = domfac.newDocumentBuilder();
             InputStream is = new FileInputStream("src/com/data/userData.xml");
             Document doc = dombuilder.parse(is);
@@ -145,7 +144,7 @@ public class UserList {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false; //to-do
+        return false;
     }
 
     /**
@@ -161,8 +160,7 @@ public class UserList {
             Document userList = docBuilder.newDocument();
             Element rootElement = userList.createElement("userList");
             userList.appendChild(rootElement);
-
-            System.out.println(uList.size());
+//Start to write data to file
             for (int i = 0; i < uList.size(); i++) {
                 Element user = userList.createElement("user");
                 rootElement.appendChild(user);
@@ -177,10 +175,9 @@ public class UserList {
 
                 Element userStockList = userList.createElement("stockList");
                 user.appendChild(userStockList);
-
+//For the stock list of the user, write to file
                 for (int j = 0; j < uList.get(i).getStockListofUser().size(); j++) {
                     Element stockExchange = userList.createElement("stockExchange");
-
                     userStockList.appendChild(stockExchange);
                     Element ticker_name = userList.createElement("ticker_name");
                     ticker_name.appendChild(userList.createTextNode(uList.get(i).getStockListofUser().get(j).getTickerName()));
@@ -191,15 +188,12 @@ public class UserList {
                     Element share = userList.createElement("share");
                     share.appendChild(userList.createTextNode(Integer.toString(uList.get(i).getStockListofUser().get(j).getShare())));
                     stockExchange.appendChild(share);
-
                 }
-
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(userList);
             StreamResult result = new StreamResult(new File("src/com/data/userData.xml"));
-
             transformer.transform(source, result);
             return true;
 
@@ -211,21 +205,21 @@ public class UserList {
             return false;
         }
     }
-    
+
     /**
-     * Sychronize the currentActiveUserList to the UserList maintained by the system.
-     * @param currentActiveUserList 
+     * Sychronize the currentActiveUserList to the UserList maintained by the
+     * system.
+     *
+     * @param currentActiveUserList
      */
     public static void syncUserList(ArrayList<User> currentActiveUserList) {
         int count = uList.size();
-//        System.out.println(count);
-//        System.out.println(currentActiveUserList.size());
-        for (int i = 0; i < currentActiveUserList.size(); ++ i) {
-            for (int j = 0; j < count; ++ j) {
-                if (currentActiveUserList.get(i).getUserName()!=null && currentActiveUserList.get(i).getUserName().equals(uList.get(j).getUserName()))
+        for (int i = 0; i < currentActiveUserList.size(); ++i) {
+            for (int j = 0; j < count; ++j) {
+                if (currentActiveUserList.get(i).getUserName() != null && currentActiveUserList.get(i).getUserName().equals(uList.get(j).getUserName())) {
                     uList.get(j).setBalance(currentActiveUserList.get(i).getBalance());
+                }
             }
-//            uList.add(currentActiveUserList.get(i));
         }
     }
 }

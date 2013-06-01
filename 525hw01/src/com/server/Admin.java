@@ -7,7 +7,6 @@ package com.server;
 import com.api.AdminAPI;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
  *
@@ -15,14 +14,24 @@ import java.util.ArrayList;
  */
 public class Admin implements AdminAPI {
 
+    //Admin's name
     private String adminName;
 
+    /**
+     *
+     * Constructor
+     */
     public Admin() {
     }
+
+    /**
+     * Constructor
+     *
+     * @param name
+     */
     public Admin(String adminName) {
         this.adminName = adminName;
     }
-
 
     /**
      * @return the adminName
@@ -38,15 +47,6 @@ public class Admin implements AdminAPI {
         this.adminName = adminName;
     }
 
-//    /**
-//     * Get the Market stock List
-//     *
-//     * @return
-//     */
-//    @Override
-//    public ArrayList<StockExchange> getStockList() {
-//        return StockList.getStockPool();
-//    }
     /**
      * Find the stock by its name and update it
      *
@@ -71,6 +71,7 @@ public class Admin implements AdminAPI {
         returnStr += "[Ticker_name]\t[Shares]\t[Current_Price]\n";
         for (int i = 0; i < StockList.getStockPool().size(); i++) {
             double price = (StockList.getStockPool().get(i)).getPrice();
+            //keep two places of decimal
             BigDecimal changeDP = new BigDecimal(price);
             double priceDisplay = changeDP.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             returnStr += ((StockList.getStockPool().get(i)).getTickerName() + "\t\t"
@@ -80,6 +81,12 @@ public class Admin implements AdminAPI {
         return returnStr;
     }
 
+    /**
+     * Pass and set name for admin, for the remote uses
+     *
+     * @param adminName
+     * @throws RemoteException
+     */
     @Override
     public void startAdmin(String adminName) throws RemoteException {
         this.adminName = adminName;
