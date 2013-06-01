@@ -64,7 +64,7 @@ public class Admin implements AdminAPI {
     @Override
     public String displayMarketStocks() {
         String returnStr = "";
-        returnStr += "Stock Name-----Shares Hold-----Current Price\n";
+        returnStr += "[Ticker_name]\t[Shares]\t[Current_Price]\n";
         for (int i = 0; i < StockList.getStockPool().size(); i++) {
             double price = (StockList.getStockPool().get(i)).getPrice();
             BigDecimal changeDP = new BigDecimal(price);

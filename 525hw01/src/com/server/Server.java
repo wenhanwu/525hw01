@@ -51,6 +51,7 @@ public class Server implements ServerAPI{
                 StockList.updateWholeStockList();
                 Thread.sleep(2000);
                 System.out.println(StockList.getStockPool());
+                StockList.saveStockPoolToDisk();
 //                System.out.println(adminObj.displayMarketStocks());
             }
 

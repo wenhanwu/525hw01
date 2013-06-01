@@ -217,7 +217,7 @@ public class User implements UserAPI {
     @Override
     public String displayStocksHold() {
         String returnStr = "";
-        returnStr += "[Ticker_name]\t\t[Shares]\t\t[Last_Trade_Price]\n";
+        returnStr += "[Ticker_name]\t[Shares]  [Last_Trade_Price]\n";
         for (int i = 0; i < sEList.size(); i++) {
             double price = (sEList.get(i)).getPrice();
             BigDecimal changeDP = new BigDecimal(price);

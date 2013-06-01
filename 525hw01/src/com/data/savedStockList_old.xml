@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<stockList>
+    <stockExchange>
+        <ticker_name>GOOG</ticker_name>
+        <price>880.4</price>
+        <share>1000</share>
+    </stockExchange>
+    <stockExchange>
+        <ticker_name>YHOO</ticker_name>
+        <price>25.98</price>
+        <share>1000</share>
+    </stockExchange>
+    <stockExchange>
+        <ticker_name>AAPL</ticker_name>
+        <price>440.85</price>
+        <share>1000</share>
+    </stockExchange>
+    <stockExchange>
+        <ticker_name>MSFT</ticker_name>
+        <price>34.41333</price>
+        <share>1000</share>
+    </stockExchange>
+    <stockExchange>
+        <ticker_name>BBRY</ticker_name>
+        <price>14.31</price>
+        <share>1000</share>
+    </stockExchange>
+</stockList>

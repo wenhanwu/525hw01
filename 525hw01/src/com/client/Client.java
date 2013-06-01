@@ -41,7 +41,7 @@ public class Client {
 
             // get user type or add new user
             try {
-                if (userInput.startsWith("user", 0)) {
+                if (userInput.startsWith("user ", 0)) {
                     type = 1;
                     userName = userInput.substring(5).trim().toLowerCase();
                     if (userName.equals("")) {
@@ -49,7 +49,7 @@ public class Client {
                         return 0;
                     }
                     break;
-                } else if (userInput.startsWith("admin", 0)) {
+                } else if (userInput.startsWith("admin ", 0)) {
                     type = 2;
                     userName = userInput.substring(5).trim().toLowerCase();
                     if (userName.equals("")) {
@@ -95,8 +95,9 @@ public class Client {
 
     static void userPrompt() {
         System.out.println("---------------------------------------------------------");
-        System.out.println("|Commmands:	s - Sell stocks         b - Buy stocks\t|");
-        System.out.println("|		l - Get My Stock List   q - Quit\t|");
+        System.out.println("|Commmands:	s - Sell stock           b - Buy stock\t|");
+        System.out.println("|		l - My stock list        c - Check price|");
+        System.out.println("|           \tq - Quit\t\t\t\t|");
         System.out.println("---------------------------------------------------------");
         System.out.print("Please select your operation: ");
     }
@@ -206,7 +207,7 @@ public class Client {
             } else if (userInput.equalsIgnoreCase("b")) {   //user selection: buy
                 try {
                     System.out.print("please input ticker name: ");
-                    String ticker_name = scan.nextLine();
+                    String ticker_name = scan.nextLine().trim().toUpperCase();
 
                     double price = user.getMarketPrice(ticker_name);
                     //validation
@@ -264,11 +265,27 @@ public class Client {
                     e.printStackTrace();
                 }
 
-            } 
-//            else {
-//
-//                System.out.println("Invalid input! Please select your operation:");
-//            }
+            } else if (userInput.equalsIgnoreCase("c")) {
+                try {
+                    System.out.print("please input ticker name: ");
+                    String ticker_name = scan.nextLine().trim().toUpperCase();
+
+                    double price = user.getMarketPrice(ticker_name);
+                    //validation
+                    if (price == -1) {
+                        System.out.println("The ticker_name is not found!");
+                    } else {
+                        System.out.println("The current price of " + ticker_name + " is " + price + ".");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Client exception: " + e.toString());
+                    e.printStackTrace();
+                }
+            }
+            else {
+
+                System.out.println("Invalid input!");
+            }
 
 
         } while (true);
