@@ -1,19 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.server;
 
 import com.api.AdminAPI;
 import com.api.UserAPI;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 /**
+ * This class runs on the server side.
  *
  * @author jingboyu
  */
@@ -24,17 +19,14 @@ public class Server {
     private static ArrayList<User> curUserList;
     private static ArrayList<Admin> curAdminList;
     private static final int MAXUSERNUM = 5;
-//    private static AdminList adminList;
-
-    public Server() {
-    }
 
     public static void main(String args[]) {
 
         try {
             Server.curUserList = new ArrayList<User>();
             Server.curAdminList = new ArrayList<Admin>();
-
+            
+            // Create a pool of userStabs waiting for client.
             UserAPI[] userStub = new UserAPI[MAXUSERNUM];
             AdminAPI[] adminStub = new AdminAPI[MAXUSERNUM];
             for (int i = 0; i < MAXUSERNUM; i++) {
@@ -47,11 +39,9 @@ public class Server {
             // Bind the remote object's stub in the registry
             registry = LocateRegistry.createRegistry(PORT);
             for (int i = 0; i < MAXUSERNUM; i++) {
-
                 registry.bind("UserAPI" + i, userStub[i]);
                 registry.bind("AdminAPI" + i, adminStub[i]);
             }
-//            UserList.loadUserData();
             if (StockList.getStockPool().isEmpty()) {
                 StockList.loadStockPoolFromDisk(); //true or false
             }
@@ -61,26 +51,18 @@ public class Server {
             System.err.println("UserAPI Server ready");
 
             while (true) {
-                StockList.updateWholeStockList();
-                Thread.sleep(2000);
-                System.out.println(StockList.getStockPool());
+                StockList.updateWholeStockList();                
+                try {
+                    // wait for 2 min
+                    Thread.sleep(120000);
+                } catch (InterruptedException ie) {
+                    break;
+                }
                 StockList.saveStockPoolToDisk();
                 UserList.syncUserList(curUserList);
-                System.out.println(curUserList.get(0).getUserName() + 
-                        curUserList.get(1).getUserName() + 
-                        curUserList.get(2).getUserName() + 
-                        curUserList.get(3).getUserName() + 
-                        curUserList.get(4).getUserName() );
-//                System.out.println(adminObj.displayMarketStocks());
             }
-
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
-            e.printStackTrace();
         }
     }
-//    @Override
-//    public boolean isConnect() throws RemoteException {
-//        return true;
-//    }
 }
