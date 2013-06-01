@@ -6,6 +6,7 @@ package com.server;
 
 import com.api.AdminAPI;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -16,9 +17,12 @@ public class Admin implements AdminAPI {
 
     private String adminName;
 
+    public Admin() {
+    }
     public Admin(String adminName) {
         this.adminName = adminName;
     }
+
 
     /**
      * @return the adminName
@@ -74,5 +78,10 @@ public class Admin implements AdminAPI {
                     + priceDisplay + "\n");
         }
         return returnStr;
+    }
+
+    @Override
+    public void startAdmin(String adminName) throws RemoteException {
+        this.adminName = adminName;
     }
 }

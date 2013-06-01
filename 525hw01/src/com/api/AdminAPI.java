@@ -18,7 +18,8 @@ public interface AdminAPI extends Remote {
     public boolean update(String ticker_name, double new_price) throws RemoteException;
 
     //public ArrayList<StockExchange> getStockList() throws RemoteException;
-
     public String displayMarketStocks() throws RemoteException;
-    
+
+    public String getAdminName() throws RemoteException;
+     public void startAdmin(String adminName) throws RemoteException;
 }

@@ -18,33 +18,44 @@ import java.util.ArrayList;
  *
  * @author jingboyu
  */
-public class Server implements ServerAPI{
+public class Server implements ServerAPI {
 
     private static final int PORT = 1099;
     private static Registry registry;
-    private ArrayList<User> curUserList;
+    private static ArrayList<User> curUserList;
+    private static ArrayList<Admin> curAdminList;
+    private static final int MAXUSERNUM = 5;
 //    private static AdminList adminList;
-    
+
     public Server() {
     }
 
     public static void main(String args[]) {
 
         try {
-            User userObj = new User();
-            Admin adminObj = new Admin("admin");
-            UserAPI userStub = (UserAPI) UnicastRemoteObject.exportObject(userObj, 0);
-            AdminAPI adminStub = (AdminAPI) UnicastRemoteObject.exportObject(adminObj, 0);
-            
+            Server.curUserList = new ArrayList<User>();
+            Server.curAdminList = new ArrayList<Admin>();
+
+            UserAPI[] userStub = new UserAPI[MAXUSERNUM];
+            AdminAPI[] adminStub = new AdminAPI[MAXUSERNUM];
+            for (int i = 0; i < MAXUSERNUM; i++) {
+                curUserList.add(new User());
+                userStub[i] = (UserAPI) UnicastRemoteObject.exportObject(curUserList.get(i), 0);
+                curAdminList.add(new Admin());
+                adminStub[i] = (AdminAPI) UnicastRemoteObject.exportObject(curAdminList.get(i), 0);
+            }
+
             // Bind the remote object's stub in the registry
             registry = LocateRegistry.createRegistry(PORT);
-            registry.bind("UserAPI", userStub);
-            registry.bind("AdminAPI", adminStub);
-            
+            for (int i = 0; i < MAXUSERNUM; i++) {
+
+                registry.bind("UserAPI" + i, userStub[i]);
+                registry.bind("AdminAPI" + i, adminStub[i]);
+            }
 //            UserList.loadUserData();
-            if (StockList.getStockPool().isEmpty())
+            if (StockList.getStockPool().isEmpty()) {
                 StockList.loadStockPoolFromDisk(); //true or false
-            
+            }
             System.err.println("UserAPI Server ready");
 
             while (true) {
@@ -59,10 +70,8 @@ public class Server implements ServerAPI{
             e.printStackTrace();
         }
     }
-
 //    @Override
 //    public boolean isConnect() throws RemoteException {
 //        return true;
 //    }
-
 }
