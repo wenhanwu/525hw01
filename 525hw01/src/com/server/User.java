@@ -11,22 +11,24 @@ import java.util.ArrayList;
 
 /**
  *
- * @author w
+ * @author wenhanwu
  */
 public class User implements UserAPI {
+
     private final double INITIAL_BALANCE = 1000;
     private String userName;
     private double balance;
-    private ArrayList<StockExchange> sEList = new ArrayList();
+    private ArrayList<StockExchange> sEList;
 
     public User() {
     }
 
     public User(String userName) {
         this.userName = userName;
-        this.balance = this.INITIAL_BALANCE; 
+        this.balance = this.INITIAL_BALANCE;
+        this.sEList = new ArrayList<StockExchange>();
     }
-    
+
     /**
      *
      * @param userName
@@ -91,7 +93,7 @@ public class User implements UserAPI {
      */
     public int getAvailableShares(String ticker_name) {
         StockExchange stockEx = StockList.getStockbyName(ticker_name);
-        if (stockEx==null) {
+        if (stockEx == null) {
             return -1;
         } else {
             return stockEx.getShare();
@@ -108,7 +110,7 @@ public class User implements UserAPI {
      */
     public double getMarketPrice(String ticker_name) {
         StockExchange stockEx = StockList.getStockbyName(ticker_name);
-        if (stockEx==null) {
+        if (stockEx == null) {
             return -1.0;
         } else {
             return stockEx.getPrice();
@@ -152,16 +154,18 @@ public class User implements UserAPI {
      */
     @Override
     public int buy(String ticker_name, int num_stocks) {
-        if (StockList.getStockbyName(ticker_name)!=(null)) {
+        if (StockList.getStockbyName(ticker_name) != (null)) {
             if (StockList.getStockbyName(ticker_name).getShare() >= num_stocks) {
                 if (StockList.getStockbyName(ticker_name).getPrice() * num_stocks < getBalance()) {
                     //Update the share in user's list
+                    if(fetchStock(ticker_name)==null)
+                        sEList.add(new StockExchange(0,ticker_name,  0));
                     fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() + num_stocks);
                     //Update the price in user's list
                     fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
                     //Update the share in Market's list
                     StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() - num_stocks);
-                    this.balance=this.balance-StockList.getStockbyName(ticker_name).getPrice() * num_stocks;
+                    this.balance = this.balance - StockList.getStockbyName(ticker_name).getPrice() * num_stocks;
                     return 0;//Successful
                 } else {
                     return 2;
@@ -184,7 +188,8 @@ public class User implements UserAPI {
      */
     @Override
     public int sell(String ticker_name, int num_stocks) {
-        if (fetchStock(ticker_name)!=(null)) {
+            System.out.println("_________111_______"+fetchStock(ticker_name).getShare());
+        if (fetchStock(ticker_name) != (null)) {
             if (fetchStock(ticker_name).getShare() >= num_stocks) {
                 //Update the share in user's list
                 fetchStock(ticker_name).setShare(fetchStock(ticker_name).getShare() - num_stocks);
@@ -192,7 +197,7 @@ public class User implements UserAPI {
                 fetchStock(ticker_name).setPrice(StockList.getStockbyName(ticker_name).getPrice());
                 //Update the share in Market's list
                 StockList.getStockbyName(ticker_name).setShare(StockList.getStockbyName(ticker_name).getShare() + num_stocks);
-                this.balance=this.balance+StockList.getStockbyName(ticker_name).getPrice()*num_stocks;
+                this.balance = this.balance + StockList.getStockbyName(ticker_name).getPrice() * num_stocks;
                 return 0;//Successful
             } else {
                 return 1;
@@ -215,8 +220,8 @@ public class User implements UserAPI {
             double price = (sEList.get(i)).getPrice();
             BigDecimal changeDP = new BigDecimal(price);
             double priceDisplay = changeDP.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            returnStr += ((sEList.get(i)).getTickerName() + "\t\t" 
-                    + (sEList.get(i)).getShare() + "\t\t" 
+            returnStr += ((sEList.get(i)).getTickerName() + "\t\t"
+                    + (sEList.get(i)).getShare() + "\t\t"
                     + priceDisplay + "\n");
         }
         return returnStr;
@@ -229,8 +234,8 @@ public class User implements UserAPI {
 
     public void populateCurrentUser(String userName) throws RemoteException {
         User tempUser = UserList.fetchByUserName(userName);
-        this.userName = tempUser.getUserName();
-        this.balance = tempUser.getBalance();
-        this.sEList = tempUser.getStockListofUser();
+            this.userName = tempUser.getUserName();
+            this.balance = tempUser.getBalance();
+            this.sEList = tempUser.getStockListofUser();
     }
 }
