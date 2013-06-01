@@ -55,6 +55,9 @@ public class Server {
             if (StockList.getStockPool().isEmpty()) {
                 StockList.loadStockPoolFromDisk(); //true or false
             }
+            if (UserList.getUserList().isEmpty()) {
+                UserList.loadUserData();
+            }
             System.err.println("UserAPI Server ready");
 
             while (true) {
@@ -62,6 +65,8 @@ public class Server {
                 Thread.sleep(2000);
                 System.out.println(StockList.getStockPool());
                 StockList.saveStockPoolToDisk();
+                UserList.syncUserList(curUserList);
+                System.out.println(curUserList);
 //                System.out.println(adminObj.displayMarketStocks());
             }
 

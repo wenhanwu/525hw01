@@ -21,6 +21,7 @@ public class User implements UserAPI {
     private ArrayList<StockExchange> sEList;
 
     public User() {
+//        this.userName = "";
     }
 
     public User(String userName) {
