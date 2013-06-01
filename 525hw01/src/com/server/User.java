@@ -15,15 +15,27 @@ import java.util.ArrayList;
  */
 public class User implements UserAPI {
 
+    //Start with 1000 for the balance
     private final double INITIAL_BALANCE = 1000;
+    //User name
     private String userName;
+    //User's balance
     private double balance;
+    //Array list to store the stocks bought by the user
     private ArrayList<StockExchange> sEList;
 
+    /**
+     * Constructor
+     */
     public User() {
-         this.userName = null;
+        this.userName = null;
     }
 
+    /**
+     * Constructor with the user name
+     *
+     * @param userName
+     */
     public User(String userName) {
         this.userName = userName;
         this.balance = this.INITIAL_BALANCE;
@@ -192,7 +204,6 @@ public class User implements UserAPI {
      */
     @Override
     public int sell(String ticker_name, int num_stocks) {
-//            System.out.println("_________111_______"+fetchStock(ticker_name).getShare());
         if (fetchStock(ticker_name) != (null)) {
             if (fetchStock(ticker_name).getShare() >= num_stocks) {
                 //Update the share in user's list
@@ -231,11 +242,23 @@ public class User implements UserAPI {
         return returnStr;
     }
 
+    /**
+     * Get the user's balance for remote use
+     *
+     * @return the balance
+     * @throws RemoteException
+     */
     @Override
     public double getUserBalance() throws RemoteException {
         return this.balance;
     }
 
+    /**
+     * Build the data for the user
+     *
+     * @param userName user's name
+     * @throws RemoteException
+     */
     public void populateCurrentUser(String userName) throws RemoteException {
         User tempUser = UserList.fetchByUserName(userName);
         this.userName = tempUser.getUserName();
@@ -243,10 +266,20 @@ public class User implements UserAPI {
         this.sEList = tempUser.getStockListofUser();
     }
 
+    /**
+     * Save the data to the data file
+     *
+     * @throws RemoteException
+     */
     public void saveUserListToDisk() throws RemoteException {
         UserList.saveUserData();
     }
 
+    /**
+     * Reset the data for the current user, to free the position
+     *
+     * @throws RemoteException
+     */
     public void freeCurrentUser() throws RemoteException {
         this.userName = null;
         this.balance = 0;
