@@ -1,3 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><userList>
-
-</userList>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><userList><user><userName>tom</userName><balance>1000.0</balance><stockList/></user><user><userName>sat</userName><balance>1000.0</balance><stockList/></user><user><userName>user</userName><balance>1000.0</balance><stockList/></user></userList>

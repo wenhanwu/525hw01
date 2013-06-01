@@ -119,7 +119,7 @@ public class Client {
         do {
             try {
                 System.out.println();
-                System.out.println("User name: " + userName + "\t\t\tYour balance: " + user.getUserBalance());
+                System.out.format("User name:  %s\t\t    Your balance: %.2f\n", userName, user.getUserBalance());
             } catch (RemoteException ex) {
                 System.out.println(ex.toString());
                 System.out.println("Cannot connect to server! Abort!");
@@ -165,7 +165,21 @@ public class Client {
                     System.out.print("please input number of shares to sell: ");
 
                     //validation
-                    int num_stock = scan.nextInt();
+                    int num_stock = 0;
+                    if (scan.hasNextInt())
+                    {
+                    	num_stock = scan.nextInt();
+                    	if (num_stock <= 0)
+                    	{
+                    		System.out.println(num_stock + " must be positive integer!");
+                        	continue;
+                    	}	
+                    }
+                    else
+                    {
+                    	System.out.println(scan.nextLine() + " is an invalid input!");
+                    	continue;
+                    }
 
                     int errorCode = user.sell(ticker_name, num_stock);
 
@@ -212,7 +226,8 @@ public class Client {
                     double price = user.getMarketPrice(ticker_name);
                     //validation
                     if (price == -1) {
-                        System.out.println("Can not get price information!");
+                        System.out.println("This ticker_name does not exist!");
+                        continue;
                     } else {
                         System.out.println("the current price of " + ticker_name + " is " + price + ".");
                     }
@@ -220,14 +235,28 @@ public class Client {
                     System.out.print("please input number of shares to buy: ");
 
                     //validation on user input
-                    int num_stock = scan.nextInt();
+                    int num_stock = 0;
+                    if (scan.hasNextInt())
+                    {
+                    	num_stock = scan.nextInt();
+                    	if (num_stock <= 0)
+                    	{
+                    		System.out.println(num_stock + " must be positive integer!");
+                        	continue;
+                    	}	
+                    }
+                    else
+                    {
+                    	System.out.println(scan.nextLine() + " is an invalid input!");
+                    	continue;
+                    }
 
-                    int errorCode = user.buy(ticker_name, num_stock);
+                    int errorCode = user.buy(ticker_name, num_stock); // potential bug! it will go to never been here
 
                     //output user operation result
                     if (errorCode == 0) {
                         System.out.println("Transaction done!");
-                    } else if (errorCode == 0) {
+                    } else if (errorCode == 0) { // to do something wrong???
                         System.out.println("Ticker name does not exist!");
                     } else if (errorCode == 1) {
                         int shares = user.getAvailableShares(ticker_name);
@@ -265,7 +294,8 @@ public class Client {
                     e.printStackTrace();
                 }
 
-            } else if (userInput.equalsIgnoreCase("c")) {
+            }  else if (userInput.equalsIgnoreCase("c")) {
+
                 try {
                     System.out.print("please input ticker name: ");
                     String ticker_name = scan.nextLine().trim().toUpperCase();
@@ -286,13 +316,12 @@ public class Client {
 
                 System.out.println("Invalid input!");
             }
-
+    
             
 //            else {
 //
 //                System.out.println("Invalid input! Please select your operation:");
 //            }
-
 
         } while (true);
 
@@ -323,8 +352,22 @@ public class Client {
                     System.out.print("please input new price: ");
 
                     //validation on user input
-                    double new_price = scan.nextInt();
-
+                    double new_price = 0;
+                    if (scan.hasNextDouble())
+                    {
+                    	new_price = scan.nextDouble();
+                    	if (new_price <= 0)
+                    	{
+                    		System.out.println(new_price + " must be positive!");
+                        	continue;
+                    	}	
+                    }
+                    else
+                    {
+                    	System.out.println(scan.nextLine() + " is an invalid input!");
+                    	continue;
+                    }
+                    
                     boolean errorCode = admin.update(ticker_name, new_price);
                     if (errorCode == true) {
                         System.out.println("Ticker is successfully updated");
@@ -389,7 +432,11 @@ public class Client {
                     i++;
                 }
                 if(!findFlag){
+
+                    System.out.println("No room for you!");
+
                     System.out.println("Not room for you!");
+
                     System.exit(0);
                 }
                     
@@ -408,7 +455,11 @@ public class Client {
                     i++;
                 }
                 if(!findFlag){
+
+                    System.out.println("No room for you!");
+
                     System.out.println("Not room for you!");
+
                     System.exit(0);
                 }
                 admin.startAdmin(userName);
