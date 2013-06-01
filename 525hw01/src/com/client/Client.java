@@ -169,6 +169,7 @@ public class Client {
                     if (scan.hasNextInt())
                     {
                     	num_stock = scan.nextInt();
+                        scan.nextLine();
                     	if (num_stock <= 0)
                     	{
                     		System.out.println(num_stock + " must be positive integer!");
@@ -239,6 +240,7 @@ public class Client {
                     if (scan.hasNextInt())
                     {
                     	num_stock = scan.nextInt();
+                        scan.nextLine();
                     	if (num_stock <= 0)
                     	{
                     		System.out.println(num_stock + " must be positive integer!");
@@ -356,6 +358,7 @@ public class Client {
                     if (scan.hasNextDouble())
                     {
                     	new_price = scan.nextDouble();
+                        scan.nextLine();
                     	if (new_price <= 0)
                     	{
                     		System.out.println(new_price + " must be positive!");

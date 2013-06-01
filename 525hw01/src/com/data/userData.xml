@@ -1,3 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><userList>
-
-</userList>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><userList><user><userName>laan</userName><balance>1000.0</balance><stockList><stockExchange><ticker_name>G</ticker_name><price>19.33</price><share>2</share></stockExchange></stockList></user><user><userName>pp</userName><balance>1000.0</balance><stockList><stockExchange><ticker_name>GS</ticker_name><price>162.07</price><share>4</share></stockExchange></stockList></user></userList>
