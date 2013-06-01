@@ -66,7 +66,11 @@ public class Server {
                 System.out.println(StockList.getStockPool());
                 StockList.saveStockPoolToDisk();
                 UserList.syncUserList(curUserList);
-                System.out.println(curUserList);
+                System.out.println(curUserList.get(0).getUserName() + 
+                        curUserList.get(1).getUserName() + 
+                        curUserList.get(2).getUserName() + 
+                        curUserList.get(3).getUserName() + 
+                        curUserList.get(4).getUserName() );
 //                System.out.println(adminObj.displayMarketStocks());
             }
 
