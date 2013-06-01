@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author w
+ * @author wenhanwu
  */
 public class AdminList {
         private static ArrayList<Admin> adminList = new ArrayList();

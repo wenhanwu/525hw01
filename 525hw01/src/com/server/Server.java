@@ -22,7 +22,7 @@ public class Server implements ServerAPI{
 
     private static final int PORT = 1099;
     private static Registry registry;
-//    private static UserList userList; 
+    private ArrayList<User> curUserList;
 //    private static AdminList adminList;
     
     public Server() {

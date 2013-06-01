@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author w
+ * @author wenhanwu
  */
 public class Admin implements AdminAPI {
 
