@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.server;
 
 import java.io.BufferedReader;
@@ -30,8 +26,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * This class contains all the stock in a list, and supplies methods to
- * manipulate the list.
+ * This class contains all the stocks in a list, and supplies methods to
+ * manipulate the list. The server maintains this list and stores it on disk.
  *
  * @author haijun
  */
@@ -43,7 +39,7 @@ public class StockList {
     /**
      * Default constructor.
      */
-    public StockList() {       
+    public StockList() {
     }
 
     /**
@@ -63,20 +59,22 @@ public class StockList {
      */
     public static StockExchange getStockbyName(String ticker_name) {
         if (stockPool.isEmpty()) {
-            if (addNewStock(ticker_name))
+            if (addNewStock(ticker_name)) {
                 return stockPool.get(0);
-            else 
+            } else {
                 return null;
+            }
         }
         for (int i = 0; i < stockPool.size(); ++i) {
             if (stockPool.get(i).isSameStock(ticker_name)) {
                 return stockPool.get(i);
             }
         }
-        if (addNewStock(ticker_name))
-            return stockPool.get(stockPool.size()-1);
-        else
+        if (addNewStock(ticker_name)) {
+            return stockPool.get(stockPool.size() - 1);
+        } else {
             return null;
+        }
     }
 
     /**
@@ -90,7 +88,6 @@ public class StockList {
         Stock newStock = getStockInfoFromYahooFinancial(ticker_name);
         if (newStock != null && newStock.getPrice() != -1) {
             StockExchange st = new StockExchange(StockList.INITIAL_SHARES, newStock);
-//            stockPool.add(new StockExchange(StockList.INITIAL_SHARES, newStock));
             stockPool.add(st);
             return true;
         } else {
@@ -139,14 +136,14 @@ public class StockList {
     public static Stock getStockInfoFromYahooFinancial(String ticker_name) {
         double stockPrice = -1;
         try {
+            // get the stock price from Yahoo financial service. 
             URL yahooFinance = new URL("http://finance.yahoo.com/d/quotes.csv?s=" + ticker_name + "&f=g");
             URLConnection yc = yahooFinance.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
             String inputLine;
             if (!(inputLine = in.readLine()).equals("N/A")) {
                 stockPrice = Double.parseDouble(inputLine);
-            }
-            else {
+            } else {
                 return null;
             }
             in.close();
@@ -201,15 +198,10 @@ public class StockList {
             StreamResult result = new StreamResult(new File("src/com/data/savedStockList.xml"));
 
             transformer.transform(source, result);
-
-//            System.out.println("File saved!");
             return true;
-
         } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
             return false;
         } catch (TransformerException tfe) {
-            tfe.printStackTrace();
             return false;
         }
     }
@@ -255,9 +247,6 @@ public class StockList {
                             if (checker == 3) {
                                 stockPool.add(new StockExchange(Integer.parseInt(share), ticker_name, Double.parseDouble(price)));
                                 checker = 0;
-//                                ticker_name = "";
-//                                price = "";
-//                                share = "";
                             }
                         }
                     }
@@ -265,16 +254,12 @@ public class StockList {
             }
             return true;
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
             return false;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             return false;
         } catch (SAXException e) {
-            e.printStackTrace();
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
     }

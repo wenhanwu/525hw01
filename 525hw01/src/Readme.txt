@@ -22,7 +22,8 @@ Compilation instructions:
 
 Execution instructions:
 -----------------------
-
+start java -classpath classDir -Djava.rmi.server.codebase=file:classDir/ example.hello.Server
+java  -classpath classDir example.hello.Client
 
 
 Known bugs:
