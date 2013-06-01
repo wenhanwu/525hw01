@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.server;
 
 import com.api.UserAPI;
@@ -10,6 +6,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
+ * This is the User Obj class to contain all the data for the User. The User can
+ * buy, sell, list stocks.
  *
  * @author wenhanwu
  */

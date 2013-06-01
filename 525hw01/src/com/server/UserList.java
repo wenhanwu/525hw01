@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.server;
 
 import java.io.File;
@@ -25,16 +21,20 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
+ * This is to maintain a List to store and manage all of the Users. The data
+ * should be write into the xml file
  *
  * @author wenhanwu
  */
 public class UserList {
     //The static Array list to maintain the user data
+
     private static ArrayList<User> uList = new ArrayList<User>();
 
     /**
      * To return the Array list Obj
-     * @return 
+     *
+     * @return
      */
     public static ArrayList<User> getUserList() {
         return uList;
