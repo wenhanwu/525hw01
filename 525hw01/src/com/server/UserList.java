@@ -206,4 +206,19 @@ public class UserList {
             return false;
         }
     }
+    
+    /**
+     * Sychronize the currentActiveUserList to the UserList maintained by the system.
+     * @param currentActiveUserList 
+     */
+    public static void syncUserList(ArrayList<User> currentActiveUserList) {
+        int count = uList.size();
+        for (int i = 0; i < currentActiveUserList.size(); ++ i) {
+            for (int j = 0; j < count; ++ j) {
+                if (currentActiveUserList.get(i).getUserName().equals(uList.get(j).getUserName()))
+                    uList.get(j).setBalance(currentActiveUserList.get(i).getBalance());
+            }
+            uList.add(currentActiveUserList.get(i));
+        }
+    }
 }

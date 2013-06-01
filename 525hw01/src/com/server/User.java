@@ -190,7 +190,7 @@ public class User implements UserAPI {
      */
     @Override
     public int sell(String ticker_name, int num_stocks) {
-            System.out.println("_________111_______"+fetchStock(ticker_name).getShare());
+//            System.out.println("_________111_______"+fetchStock(ticker_name).getShare());
         if (fetchStock(ticker_name) != (null)) {
             if (fetchStock(ticker_name).getShare() >= num_stocks) {
                 //Update the share in user's list

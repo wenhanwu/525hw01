@@ -314,7 +314,7 @@ public class Client {
             }
             else {
 
-                System.out.println("Invalid input!");
+//                System.out.println("Invalid input!");
             }
     
             
@@ -395,7 +395,7 @@ public class Client {
 
             } else {
 
-                System.out.println("Invalid input! Please select your operation:");
+//                System.out.println("Invalid input! Please select your operation:");
             }
 
 

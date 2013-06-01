@@ -1,3 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><userList>
-
+    <user>
+        <userName>tom</userName>
+        <balance>1000.0</balance>
+        <stockList>
+            <stockExchange>
+                <ticker_name>GOOG</ticker_name>
+                <price>867.52</price>
+                <share>0</share>
+            </stockExchange>
+        </stockList>
+    </user>
+    <user>
+        <userName>nicole</userName>
+        <balance>1000.0</balance>
+        <stockList>
+            <stockExchange>
+                <ticker_name>GOOG</ticker_name>
+                <price>867.52</price>
+                <share>1</share>
+            </stockExchange>
+        </stockList>
+    </user>
+    <user>
+        <userName>admin</userName>
+        <balance>1000.0</balance>
+        <stockList>
+            <stockExchange>
+                <ticker_name>ORCL</ticker_name>
+                <price>33.75</price>
+                <share>10</share>
+            </stockExchange>
+        </stockList>
+    </user>
 </userList>
