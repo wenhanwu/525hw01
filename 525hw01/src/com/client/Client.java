@@ -5,7 +5,6 @@
 package com.client;
 
 import com.api.AdminAPI;
-import com.api.ServerAPI;
 import com.api.UserAPI;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -23,6 +22,7 @@ import java.util.logging.Logger;
 public class Client {
 
     private static String userName = "";
+    private static final int MAXUSERNUM = 5;
 
     public static int welcome() {			//start
 
@@ -55,7 +55,7 @@ public class Client {
                     if (userName.equals("")) {
                         System.out.println("Please input your username. Username cannot be null.");
                         return 0;
-                    }                    
+                    }
                     break;
                 } else {
                     System.out.println("Invalid user type!");
@@ -128,7 +128,7 @@ public class Client {
             userPrompt();
 
             String userInput = scan.nextLine();
-            if (userInput.equalsIgnoreCase("q")) {  
+            if (userInput.equalsIgnoreCase("q")) {
                 try {
                     //user selection: quit
                     user.saveUserListToDisk();
@@ -287,6 +287,12 @@ public class Client {
                 System.out.println("Invalid input!");
             }
 
+            
+//            else {
+//
+//                System.out.println("Invalid input! Please select your operation:");
+//            }
+
 
         } while (true);
 
@@ -363,23 +369,51 @@ public class Client {
 
         try {
             Registry registry = LocateRegistry.getRegistry(host);
-//            ServerAPI stub = (ServerAPI) registry.lookup("ServerAPI");
-//            if (stub.isConnect()) // query ServerAPI for connection
 //            {
             System.out.println("Server connected!");
             int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
             while (type == 0) {
                 type = welcome();
             }
-            
+
             if (type == 1) {
-                UserAPI user = (UserAPI) registry.lookup("UserAPI");
+                boolean findFlag = false;
+                UserAPI user = null;
+                int i=0;
+                while (!findFlag&&i<MAXUSERNUM) {
+                    user = (UserAPI) registry.lookup("UserAPI"+i);
+                    if (user.getUserName() == null) {
+                        findFlag=true;
+                        break;
+                    }
+                    i++;
+                }
+                if(!findFlag){
+                    System.out.println("Not room for you!");
+                    System.exit(0);
+                }
+                    
                 user.populateCurrentUser(userName);
                 tradeForUser(user);// call user operations
             } else if (type == 2) {
-                AdminAPI admin = (AdminAPI) registry.lookup("AdminAPI");
+                 boolean findFlag = false;
+                AdminAPI admin = null;
+                int i=0;
+                 while (!findFlag&&i<MAXUSERNUM) {
+                    admin = (AdminAPI) registry.lookup("AdminAPI"+i);
+                    if (admin.getAdminName() == null) {
+                        findFlag=true;
+                        break;
+                    }
+                    i++;
+                }
+                if(!findFlag){
+                    System.out.println("Not room for you!");
+                    System.exit(0);
+                }
+                admin.startAdmin(userName);
                 tradeForAdmin(admin); // call admin operations
-            } else  {
+            } else {
                 System.out.println("Never been here!");
             }
 //            }  

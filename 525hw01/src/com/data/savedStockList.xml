@@ -1,1 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><stockList><stockExchange><ticker_name>GOOG</ticker_name><price>867.52</price><share>1000</share></stockExchange><stockExchange><ticker_name>ORCL</ticker_name><price>33.75</price><share>1000</share></stockExchange><stockExchange><ticker_name>YHOO</ticker_name><price>26.09</price><share>1000</share></stockExchange><stockExchange><ticker_name>ABCD</ticker_name><price>1.42</price><share>1000</share></stockExchange></stockList>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><stockList>
+
+</stockList>

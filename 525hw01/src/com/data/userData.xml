@@ -1,1 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><userList><user><userName>name</userName><balance>1000.0</balance><stockList><stockExchange><ticker_name>ORCL</ticker_name><price>33.75</price><share>10</share></stockExchange></stockList></user><user><userName>user</userName><balance>1000.0</balance><stockList/></user></userList>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><userList>
+
+</userList>
