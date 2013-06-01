@@ -1,22 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.client;
 
 import com.api.AdminAPI;
 import com.api.UserAPI;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Scanner;
-import java.lang.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * entrance of the client side
+ * Entrance of the client side.
  * @author jingboyu
  */
 public class Client {
@@ -25,7 +19,7 @@ public class Client {
     private static final int MAXUSERNUM = 5;
 
     /**
-     * helper function: specify user type
+     * Helper function: specify user type.
      * @return 
      */
     public static int welcome() {       //start
@@ -66,21 +60,16 @@ public class Client {
                     System.out.println("Invalid user type!");
                     return 0;
                 }
-//                stub.returnUserType(type);
-
             } catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
                 e.printStackTrace();
             }
-
         } while (true);
-//
-
         return type;
     }
 
     /**
-     * helper function
+     * Helper function.
      */
     static void userPrompt() {
         System.out.println("---------------------------------------------------------");
@@ -92,7 +81,7 @@ public class Client {
     }
 
     /**
-     * helper function
+     * Helper function.
      */
     static void adminPrompt() {
         System.out.println("--------------------------------------------------------------");
@@ -104,14 +93,13 @@ public class Client {
     }
 
     /**
-     * user operations on client side: buy, sell, list, check and quit
+     * User operations on client side: buy, sell, list, check and quit.
      * @param user user object
      * @return 1
      */
-    public static int tradeForUser(UserAPI user) {			//start
+    public static int tradeForUser(UserAPI user) {			
 
         Scanner scan = new Scanner(System.in);
-
 
         do {
             try {
@@ -193,7 +181,6 @@ public class Client {
 
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
-                    e.printStackTrace();
                 }
 
             } else if (userInput.equalsIgnoreCase("b")) {   //user selection: buy
@@ -257,7 +244,6 @@ public class Client {
 
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
-                    e.printStackTrace();
                 }
 
             } else if (userInput.equalsIgnoreCase("l")) { //user selection: list my stocks
@@ -267,7 +253,6 @@ public class Client {
 
                 } catch (Exception e) {
                     System.err.println("Client exception: " + e.toString());
-                    e.printStackTrace();
                 }
 
             } else if (userInput.equalsIgnoreCase("c")) {   //user selection: check
@@ -287,34 +272,23 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-            } else {
-//                System.out.println("Invalid input!");
-            }
-
-
+            } else {}
         } while (true);
-
-
         return 1;
     }
 
     public static int tradeForAdmin(AdminAPI admin) {			//start
 
         Scanner scan = new Scanner(System.in);
-
-
         do {
             adminPrompt();
             String userInput = scan.nextLine();
             if (userInput.equalsIgnoreCase("q")) {  //admin selection: quit
                 break;
             }
-
             if (userInput.equalsIgnoreCase("u")) // admin selection: update
             {
-
                 try {
-
                     //user input need validation
                     System.out.print("please input ticker name: ");
                     String ticker_name = scan.nextLine();
@@ -358,26 +332,22 @@ public class Client {
                     System.err.println("Client exception: " + e.toString());
                     e.printStackTrace();
                 }
-
-            } else {
-//                System.out.println("Invalid input! Please select your operation:");
-            }
-
-
+            } else {}
+            
         } while (true);
-
-
         return 1;
     }
 
+    /**
+     * Main function.
+     * @param args 
+     */
     public static void main(String[] args) {
 
         String host = (args.length < 1) ? null : args[0];
 
-
         try {
             Registry registry = LocateRegistry.getRegistry(host);
-
             System.out.println("Server connected!");
             int type = welcome(); // get user name, and return user type, 1 ordinary user, 2 admin
             while (type == 0) {
@@ -385,8 +355,6 @@ public class Client {
             }
 
             if (type == 1) {
-
-
                 UserAPI userCheck = null;
                 for (int i = 0; i < MAXUSERNUM; i++) {
                     userCheck = (UserAPI) registry.lookup("UserAPI" + i);
@@ -397,7 +365,6 @@ public class Client {
                         }
                     }
                 }
-
 
                 boolean findFlag = false;
                 UserAPI user = null;
@@ -449,7 +416,6 @@ public class Client {
  
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
-            e.printStackTrace();
         }
 
     }

@@ -1,16 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.api;
 
-import com.server.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
- *
+ * This interface defines remote methods for administrator at the client side.
  * @author jingboyu
  */
 public interface AdminAPI extends Remote {

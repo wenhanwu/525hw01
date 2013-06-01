@@ -1,18 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.api;
 
-import com.server.Stock;
-import com.server.StockExchange;
-import java.lang.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
- *
+ * This interface defines the remote methods for Users at the client side.
  * @author jingboyu
  */
 public interface UserAPI extends Remote {
