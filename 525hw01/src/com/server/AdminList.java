@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.server;
 
 import java.util.ArrayList;
 
 /**
+ * This is to maintain a List to store and manage all of the Admins.
  *
  * @author wenhanwu
  */

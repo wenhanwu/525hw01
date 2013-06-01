@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.server;
 
 import com.api.AdminAPI;
@@ -9,6 +5,8 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
 /**
+ * This is the Admin Obj class to contain all the data for the Admin. The Admin
+ * can update, list the stock information
  *
  * @author wenhanwu
  */
