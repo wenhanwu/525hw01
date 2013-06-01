@@ -73,9 +73,11 @@ public class User implements UserAPI {
      * @return
      */
     public StockExchange fetchStock(String ticker_name) {
-        for (int i = 0; i < sEList.size(); i++) {
-            if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
-                return sEList.get(i);
+        if (!sEList.isEmpty()) {
+            for (int i = 0; i < sEList.size(); i++) {
+                if ((sEList.get(i)).getTickerName().equals(ticker_name)) {
+                    return sEList.get(i);
+                }
             }
         }
         return null;
@@ -210,7 +212,7 @@ public class User implements UserAPI {
     @Override
     public String displayStocksHold() {
         String returnStr = "";
-        returnStr += "Stock Name-----Shares Hold-----Price of Last Trade\n";
+        returnStr += "[Ticker_name]\t\t[Shares]\t\t[Last_Trade_Price]\n";
         for (int i = 0; i < sEList.size(); i++) {
             double price = (sEList.get(i)).getPrice();
             BigDecimal changeDP = new BigDecimal(price);
@@ -232,5 +234,9 @@ public class User implements UserAPI {
         this.userName = tempUser.getUserName();
         this.balance = tempUser.getBalance();
         this.sEList = tempUser.getStockListofUser();
+    }
+    
+    public void saveUserListToDisk() throws RemoteException {
+        UserList.saveUserData();
     }
 }

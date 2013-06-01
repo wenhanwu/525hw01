@@ -127,7 +127,13 @@ public class Client {
             userPrompt();
 
             String userInput = scan.nextLine();
-            if (userInput.equalsIgnoreCase("q")) {  //user selection: quit
+            if (userInput.equalsIgnoreCase("q")) {  
+                try {
+                    //user selection: quit
+                    user.saveUserListToDisk();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             }
 
@@ -227,7 +233,7 @@ public class Client {
                         if (shares == -1) {
                             System.out.println("Can not get inforamtion of shares!");
                         } else {
-                            System.out.println("There is no enough shares to buy!");
+                            System.out.println("There is not enough shares to buy!");
                             System.out.println("The current number of shares of " + ticker_name + " available to buy is " + shares + ".");
                         }
                     } else if (errorCode == 2) {

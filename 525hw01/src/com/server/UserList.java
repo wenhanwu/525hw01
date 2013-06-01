@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
  */
 public class UserList {
 
-    private static ArrayList<User> uList = new ArrayList();
+    private static ArrayList<User> uList = new ArrayList<User>();
 
     /**
      *
@@ -39,17 +39,20 @@ public class UserList {
      * @return null Cannot find the User in the User List
      */
     public static User fetchByUserName(String userName) {
-        loadUserData();
-        System.out.println(userName);
-        System.out.println(uList.get(0).getStockListofUser());
-        for (int i = 0; i < uList.size(); i++) {
-            if (uList.get(i).getUserName().equals(userName)) {
-                System.out.println("here");
-                return uList.get(i);
+        if (uList.isEmpty())
+           loadUserData();
+        if (!uList.isEmpty()) {
+    //        System.out.println(userName);
+    //        System.out.println(uList.get(0).getStockListofUser());
+            for (int i = 0; i < uList.size(); i++) {
+                if (uList.get(i).getUserName().equals(userName)) {
+    //                System.out.println("here");
+                    return uList.get(i);
+                }
             }
         }
         uList.add(new User(userName));
-        System.out.println(uList.size());
+//        System.out.println(uList.size());
         return uList.get(uList.size()-1);
     }
 
@@ -61,7 +64,7 @@ public class UserList {
     public static boolean loadUserData() {
         DocumentBuilderFactory domfac = DocumentBuilderFactory.newInstance();
         try {
-            uList.clear();
+//            uList.clear();
             DocumentBuilder dombuilder = domfac.newDocumentBuilder();
             InputStream is = new FileInputStream("src/com/data/userData.xml");
             Document doc = dombuilder.parse(is);
@@ -190,7 +193,7 @@ public class UserList {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(userList);
-            StreamResult result = new StreamResult(new File("src/com/data/userData111.xml"));
+            StreamResult result = new StreamResult(new File("src/com/data/userData.xml"));
 
             transformer.transform(source, result);
             return true;

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<userList>
+    <user>
+        <userName>tom</userName>
+        <balance>800</balance>
+        <stockList>
+            <stockExchange>
+                <ticker_name>GOOG</ticker_name>
+                <price>880.4</price>
+                <share>444</share>
+            </stockExchange>
+            <stockExchange>
+                <ticker_name>AAPL</ticker_name>
+                <price>440.85</price>
+                <share>112</share>
+            </stockExchange>
+        </stockList>
+    </user>
+    <user>
+        <userName>jason</userName>
+        <balance>000</balance>
+        <stockList>
+            <stockExchange>
+                <ticker_name>MSFT</ticker_name>
+                <price>34.41</price>
+                <share>233</share>
+            </stockExchange>
+            <stockExchange>
+                <ticker_name>AAPL</ticker_name>
+                <price>440.85</price>
+                <share>111</share>
+            </stockExchange>
+        </stockList>
+    </user>
+    <user>
+        <userName>kate</userName>
+        <balance>100</balance>
+        <stockList>
+            <stockExchange>
+                <ticker_name>GOOG</ticker_name>
+                <price>880.4</price>
+                <share>222</share>
+            </stockExchange>
+            <stockExchange>
+                <ticker_name>BBRY</ticker_name>
+                <price>14.31</price>
+                <share>88</share>
+            </stockExchange>
+        </stockList>
+    </user>
+</userList>
